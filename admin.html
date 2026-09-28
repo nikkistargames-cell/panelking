@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PANEL FUN - Master Admin Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+
+body {
+  background: #090214;
+  color: #fff;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+.admin-sidebar {
+  width: 250px;
+  background: #120326;
+  border-right: 2px solid rgba(0, 240, 255, 0.3);
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px;
+  flex-shrink: 0;
+}
+.admin-brand {
+  font-family: 'Teko', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffd700;
+  text-shadow: 0 0 10px #ff007f;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  border-bottom: 1px dashed rgba(255,255,255,0.2);
+  padding-bottom: 10px;
+}
+.nav-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+.tab-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #bbb;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+.tab-btn:hover, .tab-btn.active {
+  background: linear-gradient(90deg, #ff007f, #4a0026);
+  color: #fff;
+  border-color: #ffd700;
+  box-shadow: 0 0 12px rgba(255, 0, 127, 0.4);
+}
+
+/* MAIN CONTENT AREA */
+.admin-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: radial-gradient(circle at top right, #1b072e 0%, #090214 70%);
+}
+
+.top-bar {
+  height: 55px;
+  background: rgba(18, 7, 36, 0.95);
+  border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+.draw-timer-badge {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.4rem;
+  color: #00f0ff;
+  letter-spacing: 1px;
+}
+.admin-badge {
+  font-size: 0.8rem;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.tab-pane {
+  display: none;
+  padding: 24px;
+}
+.tab-pane.active {
+  display: block;
+}
+
+/* CARDS & TABLES */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: #14052b;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 8px;
+  padding: 14px 18px;
+}
+.stat-card span { font-size: 0.75rem; color: #888; font-weight: 800; display: block; }
+.stat-card strong { font-family: 'Teko', sans-serif; font-size: 2.2rem; color: #ffd700; line-height: 1.1; }
+
+.section-box {
+  background: #14052b;
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+.section-title {
+  font-family: 'Teko', sans-serif;
+  font-size: 1.5rem;
+  color: #ffd700;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding-bottom: 4px;
+}
+
+/* FORM STYLES */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #00f0ff;
+}
+.form-input {
+  background: #000;
+  border: 1.5px solid rgba(0, 240, 255, 0.3);
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 5px;
+  outline: none;
+  font-size: 0.85rem;
+}
+.form-input:focus { border-color: #ffd700; box-shadow: 0 0 8px rgba(255, 215, 0, 0.3); }
+
+.btn-primary {
+  background: linear-gradient(180deg, #00d97e, #005a30);
+  border: 1px solid #85ffc7;
+  color: #fff;
+  padding: 8px 16px;
+  font-family: 'Teko', sans-serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-primary:active { transform: scale(0.96); }
+
+/* DATA TABLES */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+.custom-table th {
+  background: #250942;
+  color: #ffd700;
+  font-size: 0.75rem;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #00f0ff;
+}
+.custom-table td {
+  padding: 10px;
+  font-size: 0.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.custom-table tr:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.badge-active { background: #00ff66; color: #000; padding: 2px 6px; border-radius: 4px; font-weight: 800; font-size: 0.65rem; }
+.badge-blocked { background: #ff0055; color: #fff; padding: 2px 6px; border-radius: 4px; font-weight: 800; font-size: 0.65rem; }
+
+/* LOAD BARS */
+.load-meter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.load-bar-wrap {
+  flex: 1;
+  height: 14px;
+  background: #000;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.load-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00d97e, #ffd700, #ff0055);
+}
+</style>
+</head>
+<body>
+
+  <!-- SIDEBAR NAVIGATION -->
+  <div class="admin-sidebar">
+    <div class="admin-brand">👑 PANEL FUN<br><span style="font-size: 1rem; color: #00f0ff;">MASTER ADMIN</span></div>
+    <div class="nav-tabs">
+      <button class="tab-btn active" onclick="switchTab('tab-users')">👥 USER MANAGEMENT</button>
+      <button class="tab-btn" onclick="switchTab('tab-result')">🎯 SPECIAL RESULT CONTROL</button>
+      <button class="tab-btn" onclick="switchTab('tab-bets')">🔥 LIVE BET LOAD (RISK)</button>
+      <button class="tab-btn" onclick="switchTab('tab-system')">⚙️ SYSTEM STATS</button>
+    </div>
+  </div>
+
+  <!-- MAIN VIEW -->
+  <div class="admin-content">
+    <div class="top-bar">
+      <div class="draw-timer-badge">⏳ LIVE CYCLE TIMER: <span id="adminLiveTimer">--s</span></div>
+      <div class="admin-badge">LOGGED IN: SUPER_ADMIN (ONLINE)</div>
+    </div>
+
+    <!-- 1. USER MANAGEMENT TAB -->
+    <div id="tab-users" class="tab-pane active">
+      <div class="section-box">
+        <div class="section-title">CREATE NEW USER / CLIENT</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Username (लॉगिन नाव):</label>
+            <input type="text" id="newUsername" class="form-input" placeholder="उदा. player99">
+          </div>
+          <div class="form-group">
+            <label>Password (पासवर्ड):</label>
+            <input type="password" id="newPassword" class="form-input" placeholder="पासवर्ड टाका">
+          </div>
+          <div class="form-group">
+            <label>Initial Balance (सुरुवातीचे बॅलन्स):</label>
+            <input type="number" id="newBalance" class="form-input" value="1000">
+          </div>
+        </div>
+        <button class="btn-primary" onclick="createUser()">+ नवीन युझर तयार करा</button>
+      </div>
+
+      <div class="section-box">
+        <div class="section-title">USERS LIST & WALLET CONTROL</div>
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>USER ID</th>
+              <th>USERNAME</th>
+              <th>PASSWORD</th>
+              <th>WALLET BALANCE</th>
+              <th>STATUS</th>
+              <th>ACTIONS (बॅलन्स जोडा / वजा करा)</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <!-- Dynamic Users -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 2. SPECIAL RESULT CONTROL TAB -->
+    <div id="tab-result" class="tab-pane">
+      <div class="section-box">
+        <div class="section-title">SET MANUAL DRAW RESULT (निकालावर ताबा)</div>
+        <div style="font-size: 0.8rem; color: #aaa; margin-bottom: 12px;">
+          येथे तुम्ही पुढच्या ६० सेकंदाच्या ड्रॉसाठी हवी ती पट्टी (Patti) आधीच ठरवून ठेवू शकता. जर बॉक्स रिकामा ठेवला, तर निकाल 'AUTO (Random)' लागेल.
+        </div>
+        <div class="form-row" style="max-width: 500px;">
+          <div class="form-group">
+            <label>Next Winner Patti (3 Digits - उदा. 128, 234):</label>
+            <input type="text" id="manualPattiInput" class="form-input" placeholder="उदा. 128" maxlength="3">
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-primary" onclick="setManualResult()">निकाल सेव्ह करा (LOCK RESULT)</button>
+          <button class="btn-primary" style="background: #ff0055; border-color: #ff80a0;" onclick="clearManualResult()">AUTO मोड करा (RANDOM)</button>
+        </div>
+        <div id="manualResultStatus" style="margin-top: 14px; font-weight: bold; color: #00ff66;">
+          CURRENT MODE: AUTO (System picks random winner)
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. LIVE BET LOAD TAB -->
+    <div id="tab-bets" class="tab-pane">
+      <div class="dashboard-grid">
+        <div class="stat-card">
+          <span>CURRENT ROUND BET LOAD</span>
+          <strong id="totalRoundBetLoad">₹0</strong>
+        </div>
+        <div class="stat-card">
+          <span>MOST PLAYED ANK</span>
+          <strong id="topAnkLoad" style="color: #ff007f;">--</strong>
+        </div>
+      </div>
+
+      <div class="section-box">
+        <div class="section-title">TOP BET LOADED PATTIS (जास्त भार असणाऱ्या पट्ट्या)</div>
+        <div id="pattiLoadContainer">
+          <div style="color: #777;">सध्या चालू राऊंडमध्ये कोणतेही बेट्स आलेले नाहीत.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. SYSTEM STATS TAB -->
+    <div id="tab-system" class="tab-pane">
+      <div class="section-box">
+        <div class="section-title">SYSTEM SETTINGS & RESET</div>
+        <p style="font-size: 0.8rem; color: #aaa; margin-bottom: 14px;">संपूर्ण युझर्स डेटा आणि गेम हिस्ट्री क्लिअर करण्यासाठी खालील बटण वापरा.</p>
+        <button class="btn-primary" style="background: #ff0055;" onclick="resetAllData()">RESET ALL SYSTEM DATA</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+// ==========================================================
+// DATA ENGINE (LOCAL STORAGE SYNC)
+// ==========================================================
+let usersDatabase = JSON.parse(localStorage.getItem("PF_USERS_DB")) || [
+  { id: "PK-1001", username: "KING_PLAYER_777", password: "123", balance: 1000, status: "ACTIVE" }
+];
+
+function saveUsers() {
+  localStorage.setItem("PF_USERS_DB", JSON.stringify(usersDatabase));
+  renderUsers();
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll(".tab-pane").forEach(p => p.classList.remove("active"));
+  event.currentTarget.classList.add("active");
+  document.getElementById(tabId).classList.add("active");
+}
+
+// USER MANAGEMENT FUNCTIONS
+function createUser() {
+  const u = document.getElementById("newUsername").value.trim();
+  const p = document.getElementById("newPassword").value.trim();
+  const b = parseInt(document.getElementById("newBalance").value) || 0;
+
+  if (!u || !p) {
+    alert("Username आणि Password दोन्ही आवश्यक आहेत!");
+    return;
+  }
+  if (usersDatabase.some(user => user.username === u)) {
+    alert("हा Username आधीच अस्तित्वात आहे!");
+    return;
+  }
+
+  const newUser = {
+    id: `PK-${Math.floor(1000 + Math.random() * 9000)}`,
+    username: u,
+    password: p,
+    balance: b,
+    status: "ACTIVE"
+  };
+
+  usersDatabase.push(newUser);
+  saveUsers();
+  alert(`User ${u} यशस्वीरित्या तयार केला!`);
+  document.getElementById("newUsername").value = "";
+  document.getElementById("newPassword").value = "";
+}
+
+function modifyUserBalance(username, type) {
+  const amt = parseInt(prompt(`किती रक्कम ${type === 'ADD' ? 'जमा (Add)' : 'वजा (Deduct)'} करायची आहे?`));
+  if (!amt || amt <= 0) return;
+
+  const user = usersDatabase.find(u => u.username === username);
+  if (user) {
+    if (type === 'ADD') user.balance += amt;
+    else {
+      if (user.balance < amt) { alert("शिल्लक रकमेपेक्षा जास्त वजा करता येत नाही!"); return; }
+      user.balance -= amt;
+    }
+    saveUsers();
+  }
+}
+
+function toggleUserStatus(username) {
+  const user = usersDatabase.find(u => u.username === username);
+  if (user) {
+    user.status = user.status === "ACTIVE" ? "BLOCKED" : "ACTIVE";
+    saveUsers();
+  }
+}
+
+function renderUsers() {
+  const tbody = document.getElementById("usersTableBody");
+  tbody.innerHTML = "";
+  usersDatabase.forEach(u => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${u.id}</td>
+      <td style="color: #ffd700; font-weight: bold;">${u.username}</td>
+      <td><code>${u.password}</code></td>
+      <td style="color: #00f0ff; font-weight: bold;">₹${u.balance}</td>
+      <td><span class="${u.status === 'ACTIVE' ? 'badge-active' : 'badge-blocked'}">${u.status}</span></td>
+      <td>
+        <button style="background: #00d97e; border:none; padding: 4px 8px; border-radius: 4px; font-weight:bold; cursor:pointer;" onclick="modifyUserBalance('${u.username}', 'ADD')">+ Cash</button>
+        <button style="background: #ffaa00; border:none; padding: 4px 8px; border-radius: 4px; font-weight:bold; cursor:pointer;" onclick="modifyUserBalance('${u.username}', 'DEDUCT')">- Cash</button>
+        <button style="background: #ff0055; color:#fff; border:none; padding: 4px 8px; border-radius: 4px; font-weight:bold; cursor:pointer;" onclick="toggleUserStatus('${u.username}')">${u.status === 'ACTIVE' ? 'Block' : 'Unblock'}</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// SPECIAL RESULT CONTROLLER
+function setManualResult() {
+  const patti = document.getElementById("manualPattiInput").value.trim();
+  if (!patti || patti.length !== 3 || isNaN(patti)) {
+    alert("कृपया बरोबर ३ अंकी पट्टी नंबर टाका (उदा. 128)");
+    return;
+  }
+  localStorage.setItem("PF_MANUAL_WINNER", patti);
+  document.getElementById("manualResultStatus").innerHTML = `🎯 LOCKED RESULT: <span style="color: #ffd700; font-size: 1.2rem;">${patti}</span> (पुढील निकाल फिक्स केला आहे)`;
+}
+
+function clearManualResult() {
+  localStorage.removeItem("PF_MANUAL_WINNER");
+  document.getElementById("manualPattiInput").value = "";
+  document.getElementById("manualResultStatus").innerHTML = "CURRENT MODE: AUTO (System picks random winner)";
+}
+
+// LIVE BET MONITOR
+function updateLiveBetMonitor() {
+  const liveBets = JSON.parse(localStorage.getItem("PF_CURRENT_BETS")) || {};
+  const container = document.getElementById("pattiLoadContainer");
+  const entries = Object.entries(liveBets).sort((a,b) => b[1] - a[1]);
+
+  let total = 0;
+  entries.forEach(e => total += e[1]);
+  document.getElementById("totalRoundBetLoad").innerText = `₹${total}`;
+
+  if (entries.length === 0) {
+    container.innerHTML = `<div style="color: #777;">सध्या चालू राऊंडमध्ये कोणतेही बेट्स लागलेले नाहीत.</div>`;
+    return;
+  }
+
+  let html = "";
+  entries.slice(0, 10).forEach(([patti, amt]) => {
+    const pct = total > 0 ? (amt / total) * 100 : 0;
+    html += `
+      <div class="load-meter">
+        <span style="width: 50px; font-weight: bold; color: #ffd700;">${patti}</span>
+        <div class="load-bar-wrap">
+          <div class="load-fill" style="width: ${pct}%;"></div>
+        </div>
+        <span style="width: 70px; text-align: right; color: #00ff66;">₹${amt}</span>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+// REALTIME TIMER SYNC
+function syncAdminTimer() {
+  const now = new Date();
+  const sec = Math.floor(now.getTime() / 1000) % 60;
+  const rem = 60 - sec;
+  document.getElementById("adminLiveTimer").innerText = `${rem}s`;
+  updateLiveBetMonitor();
+}
+
+function resetAllData() {
+  if (confirm("तुम्हाला खात्री आहे का सर्व डेटा डिलीट करायचा आहे?")) {
+    localStorage.clear();
+    location.reload();
+  }
+}
+
+renderUsers();
+setInterval(syncAdminTimer, 1000);
+syncAdminTimer();
+</script>
+</body>
+</html>

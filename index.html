@@ -1,0 +1,2982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>220 Patti Landscape Matka Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+
+body {
+background: radial-gradient(circle at center, #1b072e 0%, #080214 75%, #020008 100%);
+color: #fff;
+font-family: 'Montserrat', sans-serif;
+width: 100vw;
+height: 100vh;
+overflow: hidden;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+padding: 4px 6px;
+}
+
+/* TOP HEADER */
+.top-strip {
+display: flex;
+justify-content: space-between;
+align-items: center;
+height: 30px;
+padding: 0 8px;
+background: rgba(18, 7, 36, 0.95);
+border: 1px solid rgba(255, 215, 0, 0.4);
+border-radius: 6px;
+flex-shrink: 0;
+position: relative;
+z-index: 50;
+}
+.game-brand-wrapper {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+/* MENU TOGGLE BUTTON */
+.btn-menu-toggle {
+background: linear-gradient(180deg, #ff007f, #7a003c);
+border: 1px solid #ffd700;
+color: #fff;
+border-radius: 4px;
+padding: 2px 7px;
+font-family: 'Montserrat', sans-serif;
+font-size: 0.85rem;
+font-weight: 900;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 4px;
+box-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
+transition: 0.15s;
+}
+.btn-menu-toggle:active { transform: scale(0.94); }
+
+.game-logo {
+font-family: 'Teko', sans-serif;
+font-size: 1.35rem;
+font-weight: 700;
+background: linear-gradient(90deg, #ffd700, #ff007f, #00f0ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+letter-spacing: 2px;
+line-height: 1;
+}
+.history-row {
+display: flex;
+align-items: center;
+gap: 5px;
+overflow-x: hidden;
+}
+.hist-title { font-size: 0.72rem; color: #ff007f; font-weight: 900; letter-spacing: 1px; }
+.hist-pill {
+background: #250942;
+border: 1.5px solid #ffd700;
+border-radius: 5px;
+padding: 1px 6px;
+font-family: 'Teko', sans-serif;
+font-size: 1.1rem;
+line-height: 1;
+color: #ffd700;
+white-space: nowrap;
+}
+
+/* SIDE MENU DRAWER */
+.menu-drawer-overlay {
+position: fixed;
+top: 0; left: 0; width: 100vw; height: 100vh;
+background: rgba(0, 0, 0, 0.7);
+backdrop-filter: blur(4px);
+z-index: 500;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.25s ease;
+}
+.menu-drawer-overlay.open {
+opacity: 1;
+pointer-events: auto;
+}
+.menu-drawer {
+position: fixed;
+top: 0; left: -280px;
+width: 270px;
+height: 100vh;
+background: linear-gradient(180deg, #16042b 0%, #0c0218 100%);
+border-right: 2px solid #00f0ff;
+box-shadow: 10px 0 25px rgba(0, 240, 255, 0.3);
+z-index: 501;
+transition: left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+display: flex;
+flex-direction: column;
+padding: 12px;
+}
+.menu-drawer.open {
+left: 0;
+}
+.menu-user-card {
+background: rgba(0, 240, 255, 0.1);
+border: 1px solid #00f0ff;
+border-radius: 8px;
+padding: 8px 10px;
+margin-bottom: 12px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.user-avatar {
+width: 38px;
+height: 38px;
+border-radius: 50%;
+background: #ffd700;
+color: #000;
+font-family: 'Teko';
+font-size: 1.5rem;
+font-weight: bold;
+display: flex;
+align-items: center;
+justify-content: center;
+box-shadow: 0 0 10px #ffd700;
+}
+.user-info-text {
+display: flex;
+flex-direction: column;
+}
+.user-name-title {
+font-size: 0.82rem;
+font-weight: 800;
+color: #ffd700;
+}
+.user-sub-stat {
+font-size: 0.65rem;
+color: #00f0ff;
+font-family: monospace;
+}
+.menu-list {
+display: flex;
+flex-direction: column;
+gap: 6px;
+flex: 1;
+overflow-y: auto;
+}
+.menu-item-btn {
+background: rgba(255, 255, 255, 0.05);
+border: 1px solid rgba(255, 215, 0, 0.25);
+border-radius: 6px;
+color: #fff;
+padding: 8px 12px;
+font-family: 'Montserrat', sans-serif;
+font-size: 0.76rem;
+font-weight: 800;
+text-align: left;
+display: flex;
+align-items: center;
+gap: 10px;
+cursor: pointer;
+transition: 0.15s;
+}
+.menu-item-btn:hover, .menu-item-btn:active {
+background: rgba(255, 0, 127, 0.25);
+border-color: #ff007f;
+color: #ffd700;
+box-shadow: 0 0 8px rgba(255, 0, 127, 0.4);
+}
+.menu-item-btn span.icon {
+font-size: 1rem;
+}
+.menu-close-btn {
+background: #ff0055;
+color: #fff;
+border: none;
+border-radius: 6px;
+padding: 6px 0;
+font-family: 'Teko', sans-serif;
+font-size: 1.2rem;
+font-weight: bold;
+cursor: pointer;
+text-align: center;
+margin-top: 10px;
+}
+
+/* GLOBAL BATCH TOGGLE BAR */
+.batch-bar {
+display: flex;
+align-items: center;
+justify-content: space-between;
+background: rgba(12, 3, 25, 0.9);
+border: 1px solid rgba(0, 240, 255, 0.25);
+border-radius: 6px;
+padding: 2px 8px;
+margin: 1px 0;
+flex-shrink: 0;
+}
+.batch-title {
+font-family: 'Teko', sans-serif;
+font-weight: 700;
+color: #ffd700;
+font-size: 1.1rem;
+white-space: nowrap;
+letter-spacing: 1px;
+}
+.batch-boxes {
+display: flex;
+flex-wrap: wrap;
+gap: 6px;
+align-items: center;
+}
+.batch-item {
+display: inline-flex;
+align-items: center;
+gap: 3px;
+cursor: pointer;
+background: rgba(255,255,255,0.06);
+padding: 1px 6px;
+border-radius: 4px;
+border: 1px solid rgba(255,255,255,0.15);
+font-weight: 800;
+font-size: 0.65rem;
+}
+.batch-item input { accent-color: #00f0ff; cursor: pointer; width: 13px; height: 13px; }
+
+/* MAIN ARENA */
+.landscape-arena {
+display: grid;
+grid-template-columns: 2.3fr 1.35fr 2.3fr;
+gap: 5px;
+height: calc(100vh - 68px);
+width: 100%;
+}
+
+/* WING WRAPPER */
+.wing-container {
+display: flex;
+gap: 3px;
+background: rgba(15, 5, 28, 0.75);
+border: 1.5px solid rgba(0, 240, 255, 0.25);
+border-radius: 8px;
+padding: 3px;
+overflow: hidden;
+width: 100%;
+height: 100%;
+}
+
+/* ROW SELECTORS (SP, DP आणि TP तिन्हींसाठी रो सिलेक्टर) */
+.row-selectors {
+display: flex;
+flex-direction: column;
+width: 18px;
+flex-shrink: 0;
+padding-top: 54px;
+gap: 3px;
+overflow-y: auto;
+}
+.row-selectors::-webkit-scrollbar { display: none; }
+.row-cb-item {
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+}
+.row-cb-item input {
+width: 13px;
+height: 13px;
+accent-color: #ffd700;
+cursor: pointer;
+}
+
+.wing-board {
+flex: 1;
+display: grid;
+grid-template-columns: repeat(5, 1fr);
+gap: 3px;
+height: 100%;
+overflow: hidden;
+}
+
+.ank-col {
+display: flex;
+flex-direction: column;
+background: rgba(8, 2, 16, 0.9);
+border: 1px solid rgba(255, 255, 255, 0.12);
+border-radius: 5px;
+overflow: hidden;
+height: 100%;
+}
+
+.ank-header {
+background: linear-gradient(180deg, #ff007f, #4a0026);
+font-family: 'Teko', sans-serif;
+font-size: 1.8rem;
+line-height: 1;
+font-weight: 700;
+color: #ffd700;
+text-align: center;
+padding: 1px 0;
+border-bottom: 1.5px solid #ffd700;
+letter-spacing: 1px;
+cursor: pointer;
+}
+.ank-header:active { filter: brightness(1.3); }
+
+/* SP-ONLY SELECT HEADER UNDER ANK */
+.ank-select-group {
+display: flex;
+align-items: center;
+justify-content: center;
+background: #120324;
+padding: 2px 1px;
+border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.ank-cb-label {
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+gap: 5px;
+font-size: 0.65rem;
+font-weight: 900;
+cursor: pointer;
+background: rgba(0, 240, 255, 0.08);
+border-radius: 3px;
+padding: 1px 10px;
+width: 90%;
+}
+.ank-cb-label.sp-lbl { color: #00f0ff; }
+.ank-cb-label input {
+width: 12px;
+height: 12px;
+cursor: pointer;
+accent-color: #00f0ff;
+}
+
+.patti-scroll {
+flex: 1;
+overflow-y: auto;
+padding: 2px;
+display: flex;
+flex-direction: column;
+gap: 3px;
+}
+.patti-scroll::-webkit-scrollbar { width: 2px; }
+.patti-scroll::-webkit-scrollbar-thumb { background: #ff007f; }
+
+/* DP CHECKBOX HEADER BUTTON */
+.dp-header-btn-wrap {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 4px;
+background: rgba(255, 0, 234, 0.18);
+border: 1px solid rgba(255, 0, 234, 0.4);
+border-radius: 3px;
+padding: 2px 0;
+margin-top: 3px;
+cursor: pointer;
+}
+.dp-header-btn-wrap span {
+font-size: 0.65rem;
+font-weight: 900;
+color: #ff00ea;
+}
+.dp-header-btn-wrap input {
+width: 12px;
+height: 12px;
+cursor: pointer;
+accent-color: #ff00ea;
+}
+
+/* TP CHECKBOX HEADER BUTTON */
+.tp-header-btn-wrap {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 4px;
+background: rgba(255, 215, 0, 0.18);
+border: 1px solid rgba(255, 215, 0, 0.45);
+border-radius: 3px;
+padding: 2px 0;
+margin-top: 3px;
+cursor: pointer;
+}
+.tp-header-btn-wrap span {
+font-size: 0.65rem;
+font-weight: 900;
+color: #ffd700;
+}
+.tp-header-btn-wrap input {
+width: 12px;
+height: 12px;
+cursor: pointer;
+accent-color: #ffd700;
+}
+
+.patti-item {
+background: #150629;
+border: 1.5px solid rgba(0, 240, 255, 0.3);
+border-radius: 4px;
+height: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: 'Teko', sans-serif;
+font-size: 1.55rem;
+line-height: 1;
+font-weight: 700;
+letter-spacing: 1.5px;
+color: #00f0ff;
+cursor: pointer;
+position: relative;
+flex-shrink: 0;
+}
+.patti-item.dp-item { color: #ff8df7; border-color: rgba(255, 0, 234, 0.4); }
+.patti-item.tp-item { color: #ffd700; border-color: rgba(255, 215, 0, 0.5); }
+.patti-item:active { transform: scale(0.95); }
+
+.patti-item.has-bet {
+background: #3c004d !important;
+border-color: #ffd700 !important;
+color: #ffd700 !important;
+}
+.bet-chip-badge {
+position: absolute;
+top: -5px;
+right: -2px;
+background: #ffd700;
+color: #000;
+font-family: 'Montserrat', sans-serif;
+font-size: 0.48rem;
+font-weight: 900;
+border-radius: 5px;
+padding: 0 3px;
+display: none;
+}
+.patti-item.has-bet .bet-chip-badge { display: block; }
+
+/* ==========================================================
+   CENTER DASHBOARD (ALIGNED TO BOTTOM WITH TOP SPACING)
+   ========================================================== */
+.center-dashboard {
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: center;
+background-color: #120324 !important;
+background-image: url('background.jpg') !important;
+background-size: 100% 100% !important;
+background-position: center top !important;
+background-repeat: no-repeat !important;
+border: 1.5px solid rgba(255, 215, 0, 0.45);
+box-shadow: 0 0 15px rgba(255, 0, 128, 0.25);
+border-radius: 10px;
+padding: 4px 6px;
+height: 100%;
+overflow-y: auto;
+gap: 3px;
+position: relative;
+}
+.center-dashboard::-webkit-scrollbar { display: none; }
+
+/* टॉपला मोकळी जागा */
+.top-clear-spacer {
+flex: 1;
+width: 100%;
+min-height: 80px;
+background: transparent;
+}
+
+/* TOP CENTER BLOCK */
+.top-center-block {
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 2px;
+}
+
+.system-clock-box {
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 5px;
+background: rgba(0, 0, 0, 0.65);
+backdrop-filter: blur(2px);
+border: 1px solid rgba(0, 240, 255, 0.25);
+border-radius: 5px;
+padding: 1px 0;
+}
+.clock-label { font-size: 0.52rem; font-weight: 800; color: #ff007f; letter-spacing: 1px; }
+.clock-time {
+font-family: 'Teko', sans-serif;
+font-size: 1.2rem;
+line-height: 1;
+font-weight: 700;
+color: #00f0ff;
+letter-spacing: 1.5px;
+}
+
+.last-result-wrapper {
+width: 100%;
+text-align: center;
+margin: 0;
+background: rgba(0, 0, 0, 0.45);
+border-radius: 6px;
+padding: 1px 0;
+}
+.last-res-label {
+font-size: 0.58rem;
+font-weight: 900;
+color: #00f0ff;
+letter-spacing: 2px;
+line-height: 1;
+}
+.last-res-display {
+font-family: 'Teko', sans-serif;
+font-size: 2.1rem;
+line-height: 1;
+font-weight: 700;
+color: #ffd700;
+letter-spacing: 3px;
+text-shadow: 0 0 15px #ff007f, 0 0 25px #ffd700;
+}
+.last-won-display {
+font-family: 'Teko', sans-serif;
+font-size: 1.1rem;
+line-height: 1;
+font-weight: 700;
+color: #00ff66;
+letter-spacing: 1px;
+}
+
+/* TIMER */
+.timer-section-boxless {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+margin: 1px 0;
+width: 100%;
+background: rgba(0, 0, 0, 0.45);
+border-radius: 6px;
+padding: 1px 0;
+}
+.timer-circ-large {
+width: 44px;
+height: 44px;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.timer-circ-large svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.timer-circ-large circle { fill: none; stroke-width: 6; }
+.t-bg { stroke: rgba(255,255,255,0.1); }
+.t-bar {
+stroke: #00f0ff;
+stroke-linecap: round;
+stroke-dasharray: 138;
+stroke-dashoffset: 0;
+transition: stroke-dashoffset 0.25s linear, stroke 0.3s;
+}
+.timer-val-large {
+position: absolute;
+font-family: 'Teko', sans-serif;
+font-size: 1.85rem;
+font-weight: 700;
+color: #fff;
+line-height: 1;
+}
+.timer-status-large {
+font-family: 'Teko';
+font-size: 1.25rem;
+line-height: 1;
+color: #00f0ff;
+font-weight: 700;
+letter-spacing: 1px;
+}
+
+/* LIVE REEL SLOTS (आडवी साईज वाढवून बॉक्सला जवळ केली) */
+.slot-machine-box {
+background: rgba(0, 0, 0, 0.55);
+border-radius: 6px;
+padding: 2px;
+width: 100%;
+text-align: center;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+.slot-label {
+font-size: 0.65rem;
+letter-spacing: 1.5px;
+font-weight: 900;
+background: linear-gradient(90deg, #ff007f, #ffd700, #00f0ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+line-height: 1;
+margin-bottom: 2px;
+}
+.slots-container {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 4px; /* अंतर कमी करून रील्स रुंद केले */
+width: 100%;
+padding: 0 2px;
+}
+.slot-reel-window {
+position: relative;
+flex: 1;
+max-width: 90px; /* रुंदी वाढवली */
+height: 84px;
+background: linear-gradient(180deg, #090214 0%, #1c0533 50%, #090214 100%);
+border: 2px solid #ffd700;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: inset 0 10px 14px #000, 0 0 14px rgba(255, 0, 127, 0.4);
+}
+.slot-reel-strip { position: absolute; top: 0; left: 0; width: 100%; }
+.reel-number {
+width: 100%;
+height: 84px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-family: 'Teko', sans-serif;
+font-size: 4.2rem;
+font-weight: 700;
+color: #ffd700;
+text-shadow: 0 0 15px #ffd700, 0 0 25px #ff007f;
+line-height: 1;
+}
+.slot-ank-sum {
+font-family: 'Teko', sans-serif;
+font-size: 1.25rem;
+font-weight: 700;
+color: #00f0ff;
+letter-spacing: 1.5px;
+line-height: 1;
+margin-top: 1px;
+}
+
+/* 3 RATE COINS */
+.rate-coins-section {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 4px;
+width: 100%;
+margin-top: 2px;
+}
+.rate-coin {
+flex: 1;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background: radial-gradient(circle at 35% 30%, #ffe97d 0%, #d49c00 60%, #5e3b00 100%);
+border: 1.5px solid #fff5a6;
+border-radius: 6px;
+padding: 1px;
+}
+.rate-coin-title {
+font-family: 'Montserrat', sans-serif;
+font-size: 0.46rem;
+font-weight: 900;
+color: #120324;
+line-height: 1;
+}
+.rate-coin-value {
+font-family: 'Teko', sans-serif;
+font-size: 1.05rem;
+font-weight: 700;
+color: #000;
+line-height: 1;
+}
+
+/* CONTROLS CLUSTER */
+.controls-cluster {
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 3px;
+background: rgba(0, 0, 0, 0.55);
+padding: 4px;
+border-radius: 6px;
+}
+
+/* CLAIM BARCODE SCANNER / MANUAL INPUT BOX */
+.claim-barcode-box {
+width: 100%;
+height: 32px;
+background: #000;
+border: 1.5px solid #00f0ff;
+border-radius: 6px;
+color: #ffd700;
+font-family: monospace;
+font-size: 1.05rem;
+font-weight: bold;
+text-align: center;
+outline: none;
+letter-spacing: 2px;
+box-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
+text-transform: uppercase;
+}
+.claim-barcode-box::placeholder {
+color: #666;
+font-family: 'Montserrat', sans-serif;
+font-size: 0.68rem;
+letter-spacing: 1px;
+}
+.claim-barcode-box:focus {
+border-color: #ffd700;
+box-shadow: 0 0 12px #ffd700;
+}
+
+/* CLAIM RESULT BANNER */
+.claim-instant-result {
+width: 100%;
+padding: 3px 6px;
+border-radius: 5px;
+font-size: 0.72rem;
+font-weight: 900;
+text-align: center;
+display: none;
+letter-spacing: 0.5px;
+}
+.claim-instant-result.win {
+display: block;
+background: rgba(0, 255, 102, 0.25);
+border: 1.5px solid #00ff66;
+color: #00ff66;
+text-shadow: 0 0 8px #00ff66;
+}
+.claim-instant-result.loss {
+display: block;
+background: rgba(255, 0, 85, 0.2);
+border: 1.5px solid #ff0055;
+color: #ff4d6d;
+}
+
+/* CLAIM BUTTON */
+.btn-claim {
+width: 100%;
+height: 32px;
+background: linear-gradient(180deg, #ffd700, #b28900);
+color: #000;
+border: 1.5px solid #fff;
+font-family: 'Teko', sans-serif;
+font-size: 1.3rem;
+font-weight: 800;
+line-height: 1;
+letter-spacing: 2px;
+border-radius: 6px;
+cursor: pointer;
+box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.btn-claim:active { transform: scale(0.96); }
+
+/* CLEAR & PRINT ACTION BUTTONS (मोठी आणि उंच बटणे) */
+.action-buttons-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 5px;
+width: 100%;
+margin-top: 2px;
+}
+.btn-large-action {
+font-family: 'Teko', sans-serif;
+font-size: 1.55rem;
+font-weight: 800;
+line-height: 1;
+letter-spacing: 2px;
+border-radius: 8px;
+height: 44px;
+cursor: pointer;
+border: 2px solid;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: transform 0.1s ease, filter 0.15s ease;
+}
+.btn-large-action:active { transform: scale(0.95); }
+
+.btn-clear-large {
+background: linear-gradient(180deg, #ff1a53, #7a001e);
+color: #fff;
+border-color: #ff80a0;
+box-shadow: 0 0 10px rgba(255, 26, 83, 0.4);
+}
+.btn-print-large {
+background: linear-gradient(180deg, #00d97e, #005a30);
+color: #fff;
+border-color: #85ffc7;
+box-shadow: 0 0 10px rgba(0, 217, 126, 0.4);
+}
+
+/* BALANCE & CURRENT BET */
+.mini-stats {
+width: 100%;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 4px;
+}
+.m-stat {
+background: #0d031b;
+border: 1px solid rgba(0,240,255,0.25);
+border-radius: 5px;
+padding: 1px 3px;
+text-align: center;
+}
+.m-stat span { color: #888; font-size: 0.48rem; display: block; font-weight: 800; }
+.m-stat strong { font-family: 'Teko', sans-serif; color: #00f0ff; font-size: 1.25rem; line-height: 1; }
+
+/* FULL-FIT EXTRA LARGE TOKENS */
+.token-bar {
+width: 100%;
+display: flex;
+justify-content: center;
+}
+.chips-flex {
+display: flex;
+gap: 6px;
+justify-content: space-between;
+width: 100%;
+}
+.chip {
+flex: 1;
+height: 34px;
+border-radius: 6px;
+font-family: 'Teko', sans-serif;
+font-size: 1.4rem;
+font-weight: 700;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+border: 2px solid #fff;
+color: #fff;
+line-height: 1;
+}
+.c1 { background: radial-gradient(circle, #00d4ff, #0055ff); }
+.c2 { background: radial-gradient(circle, #00ff88, #009944); }
+.c5 { background: radial-gradient(circle, #ff007f, #99004d); }
+.c10 { background: radial-gradient(circle, #ffd700, #cc8800); color: #000; }
+.chip.active {
+transform: scale(1.06);
+box-shadow: 0 0 10px #00f0ff, 0 0 12px #ffd700;
+border-color: #ffd700;
+}
+
+/* CP & FC GRID */
+.cp-fc-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 4px;
+width: 100%;
+}
+.btn-cp-fc {
+background: linear-gradient(180deg, #6c1ec4, #2a0357);
+color: #00f0ff;
+border: 1px solid #a855f7;
+font-family: 'Teko', sans-serif;
+font-size: 1.15rem;
+font-weight: 700;
+line-height: 1;
+letter-spacing: 1px;
+border-radius: 5px;
+padding: 2px 0;
+cursor: pointer;
+transition: all 0.15s ease;
+}
+.btn-cp-fc.fc-active {
+background: linear-gradient(180deg, #ffd700, #ff8800) !important;
+color: #000 !important;
+border-color: #fff !important;
+box-shadow: 0 0 14px #ffd700, 0 0 20px #ff007f !important;
+font-weight: 900 !important;
+animation: pulseNeonFC 0.4s infinite alternate;
+}
+@keyframes pulseNeonFC {
+0% { transform: scale(1); filter: brightness(1); }
+100% { transform: scale(1.04); filter: brightness(1.2); }
+}
+
+/* ADVANCE DRAW BUTTON */
+.advance-draw-grid {
+width: 100%;
+}
+.btn-advance-draw {
+width: 100%;
+background: linear-gradient(180deg, #d97706, #78350f);
+color: #ffd700;
+border: 1px solid #f59e0b;
+font-family: 'Teko', sans-serif;
+font-size: 1.15rem;
+font-weight: 700;
+line-height: 1;
+letter-spacing: 1.5px;
+border-radius: 5px;
+padding: 2px 0;
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 6px;
+}
+
+/* PAGE BOTTOM ACTIONS */
+.page-bottom-actions {
+width: 100%;
+display: grid;
+grid-template-columns: 1.2fr 1fr;
+gap: 4px;
+margin-top: 4px;
+}
+.btn-extra-action {
+font-family: 'Teko', sans-serif;
+font-size: 1.1rem;
+font-weight: 700;
+line-height: 1;
+letter-spacing: 0.5px;
+border-radius: 5px;
+padding: 4px 0;
+cursor: pointer;
+border: 1px solid;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.btn-extra-action:active { transform: scale(0.96); }
+
+.btn-summary {
+background: linear-gradient(180deg, #1f66e5, #0a2768);
+color: #fff;
+border-color: #6ea8fe;
+}
+.btn-cancel-bet {
+background: linear-gradient(180deg, #d66800, #5c2c00);
+color: #fff;
+border-color: #ffb066;
+}
+
+/* MODALS */
+.app-modal {
+position: fixed;
+top: 0; left: 0; width: 100vw; height: 100vh;
+background: rgba(0,0,0,0.85);
+backdrop-filter: blur(5px);
+z-index: 600;
+display: flex; align-items: center; justify-content: center;
+opacity: 0; pointer-events: none;
+transition: opacity 0.25s ease;
+}
+.app-modal.show { opacity: 1; pointer-events: auto; }
+.app-modal-card {
+background: #150628;
+border: 2px solid #00f0ff;
+box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+border-radius: 12px;
+padding: 14px 16px;
+max-width: 440px;
+width: 92%;
+max-height: 86vh;
+display: flex;
+flex-direction: column;
+}
+.modal-header {
+font-family: 'Teko', sans-serif;
+font-size: 1.5rem;
+color: #ffd700;
+border-bottom: 1px solid rgba(255,255,255,0.2);
+padding-bottom: 4px;
+margin-bottom: 8px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.modal-body {
+flex: 1;
+overflow-y: auto;
+font-size: 0.82rem;
+color: #eee;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+.btn-modal-close {
+background: #ff0055;
+color: #fff;
+border: none;
+padding: 4px 16px;
+border-radius: 6px;
+font-family: 'Teko';
+font-size: 1.2rem;
+cursor: pointer;
+align-self: center;
+margin-top: 10px;
+}
+
+/* ADVANCE DRAW BUTTONS IN MODAL */
+.adv-chip-btn {
+background: #250847;
+border: 1.5px solid #00f0ff;
+color: #ffd700;
+border-radius: 6px;
+padding: 6px 0;
+font-family: 'Teko', sans-serif;
+font-size: 1.45rem;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.15s;
+}
+.adv-chip-btn:hover, .adv-chip-btn.active {
+background: #00f0ff;
+color: #000;
+box-shadow: 0 0 12px #00f0ff;
+}
+
+/* CP INPUT FIELD */
+.cp-input-large {
+width: 100%;
+background: #000;
+border: 2px solid #00f0ff;
+border-radius: 8px;
+color: #ffd700;
+font-family: 'Teko', sans-serif;
+font-size: 2.1rem;
+letter-spacing: 3px;
+text-align: center;
+padding: 6px 8px;
+outline: none;
+box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+}
+
+/* COPY BUTTON IN SUMMARY */
+.btn-copy-tkt {
+background: rgba(0, 240, 255, 0.15);
+border: 1px solid #00f0ff;
+color: #00f0ff;
+border-radius: 4px;
+padding: 1px 6px;
+font-size: 0.65rem;
+font-family: 'Montserrat', sans-serif;
+font-weight: 800;
+cursor: pointer;
+margin-left: 6px;
+transition: all 0.15s;
+}
+.btn-copy-tkt:hover {
+background: #00f0ff;
+color: #000;
+}
+
+/* TICKET CARD (ACCORDION) */
+.ticket-summary-item {
+background: rgba(255, 255, 255, 0.05);
+border: 1.5px solid rgba(255, 215, 0, 0.3);
+border-radius: 6px;
+overflow: hidden;
+}
+.ticket-summary-item.is-winner {
+border-color: #00ff66;
+box-shadow: 0 0 8px rgba(0, 255, 102, 0.3);
+}
+.ticket-header-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 6px 10px;
+cursor: pointer;
+background: rgba(255, 255, 255, 0.03);
+}
+.tkt-badge {
+font-family: 'Teko', sans-serif;
+font-size: 1.25rem;
+font-weight: 700;
+color: #ffd700;
+display: flex;
+align-items: center;
+gap: 5px;
+}
+.tkt-status-pill {
+font-family: 'Montserrat', sans-serif;
+font-size: 0.65rem;
+font-weight: 900;
+padding: 2px 7px;
+border-radius: 4px;
+}
+.status-win { background: rgba(0, 255, 102, 0.2); color: #00ff66; border: 1px solid #00ff66; }
+.status-loss { background: rgba(255, 0, 85, 0.15); color: #ff4d6d; border: 1px solid rgba(255, 0, 85, 0.4); }
+
+.ticket-details-box {
+display: none;
+padding: 6px 10px;
+background: rgba(0, 0, 0, 0.35);
+border-top: 1px dashed rgba(255, 255, 255, 0.15);
+flex-direction: column;
+gap: 3px;
+}
+.ticket-summary-item.open .ticket-details-box { display: flex; }
+.arrow-indicator { font-size: 0.75rem; color: #00f0ff; }
+
+.sum-detail-row {
+display: flex;
+justify-content: space-between;
+padding: 2px 6px;
+border-radius: 3px;
+font-family: monospace;
+font-size: 0.8rem;
+background: rgba(255, 255, 255, 0.03);
+}
+
+/* WINNER POPUP */
+.grand-overlay {
+position: fixed;
+top: 0; left: 0; width: 100vw; height: 100vh;
+background: rgba(0,0,0,0.88);
+backdrop-filter: blur(6px);
+z-index: 700;
+display: flex; align-items: center; justify-content: center;
+opacity: 0; pointer-events: none;
+transition: opacity 0.3s ease;
+}
+.grand-overlay.show { opacity: 1; pointer-events: auto; }
+.grand-card {
+background: linear-gradient(135deg, #2b0847, #0e021a);
+border: 3px solid #ffd700;
+box-shadow: 0 0 45px #ffd700;
+border-radius: 14px;
+padding: 14px 20px;
+text-align: center;
+transform: scale(0.6);
+transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+max-width: 320px;
+width: 85%;
+}
+.grand-overlay.show .grand-card { transform: scale(1); }
+.pop-patti-text {
+font-family: 'Teko', sans-serif;
+font-size: 3.5rem;
+line-height: 1;
+font-weight: 700;
+color: #fff;
+letter-spacing: 4px;
+text-shadow: 0 0 15px #ff007f;
+}
+.pop-type { font-size: 0.8rem; font-weight: 800; color: #00f0ff; }
+.pop-won-amt {
+background: rgba(0, 255, 102, 0.15);
+border: 1.5px solid #00ff66;
+border-radius: 8px;
+padding: 4px;
+margin-top: 6px;
+font-family: 'Teko', sans-serif;
+color: #00ff66;
+font-size: 1.6rem;
+line-height: 1.1;
+font-weight: 700;
+}
+</style>
+</head>
+<body oncontextmenu="return false;">
+
+<!-- TOP STRIP WITH MENU TOGGLE BESIDE LOGO -->
+<div class="top-strip">
+  <div class="game-brand-wrapper">
+    <button class="btn-menu-toggle" onclick="toggleMenuDrawer(true)">☰ MENU</button>
+    <div class="game-logo">PANEL FUN (SP / DP / TP)</div>
+  </div>
+  <div class="history-row">
+    <div class="hist-title">LAST:</div>
+    <div id="histContainer" style="display: flex; gap: 4px;"></div>
+  </div>
+</div>
+
+<!-- SIDEBAR MENU DRAWER OVERLAY -->
+<div id="menuDrawerOverlay" class="menu-drawer-overlay" onclick="toggleMenuDrawer(false)"></div>
+
+<!-- SIDEBAR MENU DRAWER -->
+<div id="menuDrawer" class="menu-drawer">
+  <!-- USER CARD -->
+  <div class="menu-user-card">
+    <div class="user-avatar">K</div>
+    <div class="user-info-text">
+      <span class="user-name-title" id="menuUsernameText">KING_PLAYER_777</span>
+      <span class="user-sub-stat">ID: #PK-98241</span>
+      <span class="user-sub-stat" style="color: #ffd700;">BALANCE: <strong id="menuBalText">₹1000</strong></span>
+    </div>
+  </div>
+
+  <!-- MENU LIST ITEMS (RECHARGE काढून BALANCE HISTORY जोडले) -->
+  <div class="menu-list">
+    <button class="menu-item-btn" onclick="openMenuFeature('balanceHistory')">
+      <span class="icon">📜</span>
+      <span>BALANCE HISTORY</span>
+    </button>
+    <button class="menu-item-btn" onclick="openMenuFeature('oneDayPayment')">
+      <span class="icon">📅</span>
+      <span>1 DAY PAYMENT REPORT</span>
+    </button>
+    <button class="menu-item-btn" onclick="openMenuFeature('tokenSell')">
+      <span class="icon">🪙</span>
+      <span>TOKEN SELL / CASHOUT</span>
+    </button>
+    <button class="menu-item-btn" onclick="openMenuFeature('usernameProfile')">
+      <span class="icon">👤</span>
+      <span>USER PROFILE / INFO</span>
+    </button>
+    <button class="menu-item-btn" onclick="openMenuFeature('statement')">
+      <span class="icon">📊</span>
+      <span>ACCOUNT STATEMENT</span>
+    </button>
+  </div>
+
+  <button class="menu-close-btn" onclick="toggleMenuDrawer(false)">CLOSE MENU</button>
+</div>
+
+<!-- COMMON MODAL FOR ALL MENU OPTIONS -->
+<div id="menuFeatureModal" class="app-modal">
+  <div class="app-modal-card">
+    <div class="modal-header">
+      <span id="menuFeatureTitle">FEATURE</span>
+      <span style="font-size: 0.9rem; color: #ffd700;">PANEL FUN</span>
+    </div>
+    <div class="modal-body" id="menuFeatureBody"></div>
+    <button class="btn-modal-close" onclick="closeMenuFeatureModal()">CLOSE</button>
+  </div>
+</div>
+
+<!-- GLOBAL BATCH SELECTORS (1-5 & 6-0) -->
+<div class="batch-bar">
+<span class="batch-title">QUICK RANGE:</span>
+<div class="batch-boxes">
+<label class="batch-item">
+<input type="checkbox" id="cb-all-sp-15" onchange="toggleBatchRange('SP', 1, 5, this.checked)">
+<span>SP 1-5</span>
+</label>
+<label class="batch-item">
+<input type="checkbox" id="cb-all-sp-60" onchange="toggleBatchRange('SP', 6, 10, this.checked)">
+<span>SP 6-0</span>
+</label>
+<label class="batch-item">
+<input type="checkbox" id="cb-all-dp-15" onchange="toggleBatchRange('DP', 1, 5, this.checked)">
+<span>DP 1-5</span>
+</label>
+<label class="batch-item">
+<input type="checkbox" id="cb-all-dp-60" onchange="toggleBatchRange('DP', 6, 10, this.checked)">
+<span>DP 6-0</span>
+</label>
+<label class="batch-item" style="border-color: #ffd700; color: #ffd700;">
+<input type="checkbox" id="cb-all-tp" onchange="toggleBatchRange('TP', 1, 10, this.checked)">
+<span>ALL TP</span>
+</label>
+</div>
+</div>
+
+<!-- MAIN ARENA -->
+<div class="landscape-arena">
+
+<!-- LEFT WING CONTAINER: 1 TO 5 -->
+<div class="wing-container">
+<div class="row-selectors" id="leftRowSelectors"></div>
+<div class="wing-board" id="leftWing"></div>
+</div>
+
+<!-- CENTER DASHBOARD (CUSTOM BACKGROUND IMAGE SET DIRECTLY) -->
+<div class="center-dashboard" style="background-image: url('background.jpg') !important;">
+
+  <!-- टॉपला मोकळी जागा -->
+  <div class="top-clear-spacer"></div>
+
+  <!-- TOP CENTER: REAL-TIME CLOCK, LAST RESULT, TIMER, SLOTS, RATES -->
+  <div class="top-center-block">
+
+    <!-- SYSTEM CLOCK -->
+    <div class="system-clock-box">
+      <span class="clock-label">TIME:</span>
+      <span class="clock-time" id="systemClockText">--:--:-- --</span>
+    </div>
+
+    <!-- BOXLESS LARGE LAST RESULT -->
+    <div class="last-result-wrapper">
+      <div class="last-res-label">LAST RESULT</div>
+      <div class="last-res-display" id="bigLastResultText">--- - -</div>
+      <div class="last-won-display" id="bigLastWonText">LAST WIN: ₹0</div>
+    </div>
+
+    <!-- 60s TIMER -->
+    <div class="timer-section-boxless">
+      <div class="timer-circ-large">
+        <svg viewBox="0 0 50 50">
+          <circle class="t-bg" cx="25" cy="25" r="22" />
+          <circle id="timerRing" class="t-bar" cx="25" cy="25" r="22" />
+        </svg>
+        <div id="timerNum" class="timer-val-large">60</div>
+      </div>
+      <div class="timer-status-large">60s DRAW</div>
+    </div>
+
+    <!-- LIVE REEL SLOTS (आडवी साईज वाढवून बॉक्सला चिकटवली) -->
+    <div class="slot-machine-box" id="slotMachineBox">
+      <div class="slot-label">LIVE DRAW SLOTS</div>
+      <div class="slots-container">
+        <div class="slot-reel-window" id="reelBox1">
+          <div class="slot-reel-strip" id="reel1">
+            <div class="reel-number">-</div>
+          </div>
+        </div>
+        <div class="slot-reel-window" id="reelBox2">
+          <div class="slot-reel-strip" id="reel2">
+            <div class="reel-number">-</div>
+          </div>
+        </div>
+        <div class="slot-reel-window" id="reelBox3">
+          <div class="slot-reel-strip" id="reel3">
+            <div class="reel-number">-</div>
+          </div>
+        </div>
+      </div>
+      <div class="slot-ank-sum" id="ankSumText">ANK: --</div>
+    </div>
+
+    <!-- 3 COIN RATE SYMBOLS -->
+    <div class="rate-coins-section">
+      <div class="rate-coin">
+        <span class="rate-coin-title">SP RATE</span>
+        <span class="rate-coin-value">150x</span>
+      </div>
+      <div class="rate-coin">
+        <span class="rate-coin-title">DP RATE</span>
+        <span class="rate-coin-value">300x</span>
+      </div>
+      <div class="rate-coin">
+        <span class="rate-coin-title">TP RATE</span>
+        <span class="rate-coin-value">600x</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS CLUSTER -->
+  <div class="controls-cluster">
+
+    <!-- CLAIM TICKET च्या वर सेम साईझचा BARCODE / TYPE BOX -->
+    <input 
+      type="text" 
+      id="quickClaimInput" 
+      class="claim-barcode-box" 
+      placeholder="SCAN OR ENTER TICKET NO..."
+      autocomplete="off"
+      onkeydown="handleQuickBarcodeClaim(event)"
+    />
+
+    <!-- इन्स्टंट विनिंग / ट्राय अगेन रिझल्ट मेसेज पट्टी -->
+    <div id="quickClaimNotice" class="claim-instant-result"></div>
+
+    <!-- CLAIM BUTTON -->
+    <button class="btn-claim" onclick="openClaimModal()">🏆 CLAIM TICKET 🏆</button>
+
+    <!-- CLEAR & PRINT (मोठी आणि उंच बटणे) -->
+    <div class="action-buttons-grid">
+      <button class="btn-large-action btn-clear-large" onclick="clearBets()">CLEAR</button>
+      <button class="btn-large-action btn-print-large" id="mainPrintBtn" onclick="printBets()">PRINT</button>
+    </div>
+
+    <!-- BALANCE & CURRENT BET -->
+    <div class="mini-stats">
+      <div class="m-stat">
+        <span>BALANCE</span>
+        <strong id="balanceText">₹1000</strong>
+      </div>
+      <div class="m-stat">
+        <span>CURRENT BET</span>
+        <strong id="currentSelectedText" style="color: #ffd700;">₹0</strong>
+      </div>
+    </div>
+
+    <!-- FULL-FIT EXTRA LARGE TOKENS -->
+    <div class="token-bar">
+      <div class="chips-flex">
+        <div class="chip c1 active" onclick="setToken(1, this)">1₹</div>
+        <div class="chip c2" onclick="setToken(2, this)">2₹</div>
+        <div class="chip c5" onclick="setToken(5, this)">5₹</div>
+        <div class="chip c10" onclick="setToken(10, this)">10₹</div>
+      </div>
+    </div>
+
+    <!-- CP आणि FC पर्याय (FC TOGGLEABLE) -->
+    <div class="cp-fc-grid">
+      <button class="btn-cp-fc" onclick="openCPModal()">CP</button>
+      <button class="btn-cp-fc" id="btnFC" onclick="toggleFCMode()">FC</button>
+    </div>
+
+    <!-- ADVANCE DRAW पर्याय -->
+    <div class="advance-draw-grid">
+      <button class="btn-advance-draw" onclick="openAdvanceDrawModal()">
+        <span>ADVANCE DRAW:</span>
+        <span id="advanceDrawBadge" style="color: #00f0ff;">1 DRAW (CURRENT)</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM ACTIONS (PAGE BOTTOM वर) -->
+  <div class="page-bottom-actions">
+    <button class="btn-extra-action btn-summary" onclick="showLastDrawSummary()">LAST DRAW SUMMARY</button>
+    <button class="btn-extra-action btn-cancel-bet" onclick="cancelLastBet()">CANCEL LAST BET</button>
+  </div>
+
+</div>
+
+<!-- RIGHT WING CONTAINER: 6 TO 10 (0) -->
+<div class="wing-container">
+<div class="row-selectors" id="rightRowSelectors"></div>
+<div class="wing-board" id="rightWing"></div>
+</div>
+
+</div>
+
+<!-- CP (COMMON PANA SHORTCUT) MODAL -->
+<div id="cpModal" class="app-modal">
+<div class="app-modal-card">
+<div class="modal-header">
+<span>CP (COMMON PANA SHORTCUT)</span>
+<span style="font-size: 0.9rem; color: #ffd700;">UNLIMITED PAIRS</span>
+</div>
+<div class="modal-body">
+<div style="font-size: 0.78rem; color: #aaa;">Enter digits continuously (e.g. 12345678...). Dash (-) will appear automatically:</div>
+<div style="margin: 8px 0;">
+<input type="text" id="cpInputField" class="cp-input-large" placeholder="12-34-56..." oninput="formatAndApplyCP(this)" onkeydown="handleCPEnter(event)">
+</div>
+<div id="cpResultNotice" style="font-size: 0.9rem; color: #00f0ff; text-align: center; min-height: 24px;">Type digits, then press ENTER or click OK</div>
+<div style="font-size: 0.72rem; color: #888; text-align: center;">Press Enter on keyboard or click OK to confirm panels.</div>
+</div>
+<button class="btn-modal-close" style="background: #00d97e; color: #000; font-weight: bold;" onclick="confirmCPSelection()">OK / APPLY</button>
+</div>
+</div>
+
+<!-- ADVANCE DRAW MODAL (UP TO 50 DRAWS) -->
+<div id="advanceModal" class="app-modal">
+<div class="app-modal-card">
+<div class="modal-header">
+<span>SELECT ADVANCE DRAWS (UP TO 50)</span>
+<span style="font-size: 0.9rem; color: #00f0ff;">UPCOMING DRAWS</span>
+</div>
+<div class="modal-body">
+<div style="font-size: 0.78rem; color: #aaa;">Choose number of upcoming continuous draws to play:</div>
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin: 10px 0;">
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(1)">1</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(5)">5</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(10)">10</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(15)">15</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(20)">20</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(25)">25</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(30)">30</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(35)">35</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(40)">40</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(45)">45</button>
+<button class="adv-chip-btn" onclick="setAdvanceDrawCount(50)" style="grid-column: span 2; border-color: #ffd700; color: #ffd700;">50 DRAWS</button>
+</div>
+<div style="font-size: 1.1rem; color: #ffd700; font-family: 'Teko'; text-align: center;" id="advanceModalNotice">Selected: 1 Draw (Normal Draw)</div>
+</div>
+<button class="btn-modal-close" onclick="closeAdvanceModal()">CONFIRM</button>
+</div>
+</div>
+
+<!-- CLAIM TICKET MODAL WITH PASTE OPTION -->
+<div id="claimModal" class="app-modal">
+<div class="app-modal-card">
+<div class="modal-header">
+<span>CLAIM TICKET RESULT</span>
+<span style="font-size: 0.9rem; color: #ffd700;">CHECK WINNING</span>
+</div>
+<div class="modal-body">
+<div style="font-size: 0.75rem; color: #aaa;">Enter or Paste Ticket Number to verify Draw & Winning Amount:</div>
+<div style="display: flex; gap: 6px; margin: 4px 0;">
+<input type="text" id="claimTicketInput" placeholder="e.g. TKT-1001" style="flex: 1; padding: 6px; border-radius: 4px; border: 1px solid #00f0ff; background: #000; color: #fff; font-family: monospace; font-size: 1rem; text-transform: uppercase;">
+<button onclick="pasteToClaimInput()" style="background: rgba(0, 240, 255, 0.2); border: 1px solid #00f0ff; color: #00f0ff; padding: 0 10px; font-family: 'Montserrat'; font-size: 0.75rem; font-weight: bold; border-radius: 4px; cursor: pointer;">PASTE</button>
+<button onclick="verifyClaimTicket()" style="background: #00d97e; color: #000; border: none; padding: 0 14px; font-family: 'Teko'; font-size: 1.2rem; font-weight: bold; border-radius: 4px; cursor: pointer;">CHECK</button>
+</div>
+<div id="claimResultArea" style="margin-top: 6px;"></div>
+</div>
+<button class="btn-modal-close" onclick="closeClaimModal()">CLOSE</button>
+</div>
+</div>
+
+<!-- LAST DRAW SUMMARY MODAL -->
+<div id="summaryModal" class="app-modal">
+<div class="app-modal-card">
+<div class="modal-header">
+<span>LAST DRAW SUMMARY</span>
+<span id="sumTime" style="font-size: 0.95rem; color: #00f0ff;">--:--:--</span>
+</div>
+<div class="modal-body" id="summaryContent">
+<div>No draw record available yet. Complete at least 1 draw.</div>
+</div>
+<button class="btn-modal-close" onclick="closeSummaryModal()">CLOSE</button>
+</div>
+</div>
+
+<!-- GRAND WINNER POP-UP -->
+<div id="grandOverlay" class="grand-overlay">
+<div class="grand-card">
+<div style="font-size: 0.75rem; color: #ffd700; letter-spacing: 2px; font-weight: 800;">WINNER PATTI</div>
+<div id="popPatti" class="pop-patti-text">128</div>
+<div id="popType" class="pop-type">SINGLE PANA (SP)</div>
+<div style="font-size: 0.85rem; color: #00f0ff; margin-top: 4px; font-weight: 800;">
+ANK: <strong id="popAnk" style="color: #ffd700; font-family: 'Teko'; font-size: 1.8rem; vertical-align: middle;">1</strong>
+</div>
+<div id="popWonAmtBox" class="pop-won-amt">WON: ₹0</div>
+</div>
+</div>
+
+<script>
+function generate220CategorizedPanels() {
+const list = [];
+for (let a = 1; a <= 10; a++) {
+for (let b = a; b <= 10; b++) {
+for (let c = b; c <= 10; c++) {
+const d1 = a === 10 ? 0 : a;
+const d2 = b === 10 ? 0 : b;
+const d3 = c === 10 ? 0 : c;
+const sum = (d1 + d2 + d3) % 10;
+const ankGroup = sum === 0 ? 10 : sum;
+
+let pattiType = "SP";
+if (d1 === d2 && d2 === d3) {
+pattiType = "TP";
+} else if (d1 === d2 || d2 === d3 || d1 === d3) {
+pattiType = "DP";
+} else {
+pattiType = "SP";
+}
+
+list.push({
+patti: `${d1}${d2}${d3}`,
+ank: sum,
+group: ankGroup,
+type: pattiType
+});
+}
+}
+}
+return list;
+}
+
+const allPanels = generate220CategorizedPanels();
+let selectedToken = 1;
+let balance = 1000;
+
+// BALANCE HISTORY & STATEMENT LOGS
+let balanceHistoryLogs = [
+  { id: "BAL-101", date: new Date().toLocaleDateString(), time: "10:30 AM", amount: 1000, desc: "Opening Wallet Balance", type: "CREDIT" }
+];
+let statementLogs = [
+  { id: "ST-01", type: "DEPOSIT", desc: "Wallet Initial Balance", amount: "+₹1000", time: new Date().toLocaleTimeString() }
+];
+
+let selectedBets = {};
+let currentSelectedTotal = 0;
+
+let lockedBets = {};
+totalLockedBet = 0;
+
+let ticketCounter = 1001;
+let roundTickets = [];
+let allTicketsDatabase = {};
+let drawHistoryDatabase = [];
+
+let selectedAdvanceDraws = 1;
+let isFCModeActive = false;
+
+let lastPlacedTicket = null;
+let lastDrawSummaryRecord = null;
+
+const maxTimer = 60;
+let timeLeft = 60;
+let isRolling = false;
+let lastProcessedCycle = -1;
+const history = [];
+
+// Real-Time System Clock
+function updateSystemClock() {
+const now = new Date();
+const timeStr = now.toLocaleTimeString();
+const clockEl = document.getElementById("systemClockText");
+if (clockEl) clockEl.innerText = timeStr;
+}
+setInterval(updateSystemClock, 1000);
+updateSystemClock();
+
+let audioCtx = null;
+function initAudio() {
+if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+function playBeep(freq, duration = 0.04, type = "sine") {
+if (!audioCtx) return;
+const osc = audioCtx.createOscillator();
+const gain = audioCtx.createGain();
+osc.type = type;
+osc.frequency.value = freq;
+gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+osc.connect(gain); gain.connect(audioCtx.destination);
+osc.start(); osc.stop(audioCtx.currentTime + duration);
+}
+
+function playReelSlam(freq = 180) {
+if (!audioCtx) return;
+const osc = audioCtx.createOscillator();
+const gain = audioCtx.createGain();
+osc.type = "triangle";
+osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.12);
+gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+osc.connect(gain); gain.connect(audioCtx.destination);
+osc.start(); osc.stop(audioCtx.currentTime + 0.12);
+}
+
+// MENU DRAWER CONTROLS
+function toggleMenuDrawer(open) {
+  initAudio();
+  const drawer = document.getElementById("menuDrawer");
+  const overlay = document.getElementById("menuDrawerOverlay");
+  if (open) {
+    drawer.classList.add("open");
+    overlay.classList.add("open");
+    document.getElementById("menuBalText").innerText = `₹${balance}`;
+    playBeep(750, 0.04);
+  } else {
+    drawer.classList.remove("open");
+    overlay.classList.remove("open");
+    playBeep(450, 0.04);
+  }
+}
+
+function openMenuFeature(feature) {
+  toggleMenuDrawer(false);
+  const modal = document.getElementById("menuFeatureModal");
+  const title = document.getElementById("menuFeatureTitle");
+  const body = document.getElementById("menuFeatureBody");
+
+  if (feature === 'balanceHistory') {
+    title.innerText = "BALANCE HISTORY";
+    let rows = balanceHistoryLogs.map(r => `
+      <div class="sum-detail-row">
+        <span>${r.id} | ${r.time} (${r.desc})</span>
+        <span style="color: ${r.type === 'CREDIT' ? '#00ff66' : '#ff4d6d'};">${r.type === 'CREDIT' ? '+' : '-'}₹${r.amount}</span>
+      </div>
+    `).join('');
+    body.innerHTML = rows || `<div style="text-align: center; color: #888;">No balance transactions found.</div>`;
+  } else if (feature === 'oneDayPayment') {
+    title.innerText = "1 DAY PAYMENT REPORT";
+    const totalWonToday = drawHistoryDatabase.reduce((acc, curr) => acc + (curr.won || 0), 0);
+    body.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div class="sum-detail-row"><span>DATE:</span><span style="color: #ffd700;">${new Date().toLocaleDateString()}</span></div>
+        <div class="sum-detail-row"><span>TODAY TOTAL PLAYED:</span><span style="color: #00f0ff;">₹${roundTickets.length * 10}</span></div>
+        <div class="sum-detail-row"><span>TOTAL DRAWS HELD:</span><span>${drawHistoryDatabase.length} DRAWS</span></div>
+        <div class="sum-detail-row"><span>TOTAL NET WINNINGS:</span><span style="color: #00ff66; font-weight: bold;">₹${totalWonToday}</span></div>
+        <div style="background: rgba(255,215,0,0.15); border: 1px solid #ffd700; padding: 8px; border-radius: 6px; text-align: center; font-size: 0.75rem; color: #ffd700;">
+          All today payouts are settled instantly to wallet.
+        </div>
+      </div>
+    `;
+  } else if (feature === 'tokenSell') {
+    title.innerText = "TOKEN SELL / CASHOUT";
+    body.innerHTML = `
+      <div style="font-size: 0.78rem; color: #aaa;">Sell game tokens and cashout to linked bank/UPI account:</div>
+      <div style="margin: 10px 0;">
+        <input type="number" id="cashoutAmtInput" class="cp-input-large" placeholder="₹ Amount" min="10" max="${balance}">
+      </div>
+      <button onclick="processTokenSell()" style="background: linear-gradient(180deg, #ffd700, #ff8800); color: #000; border: none; width: 100%; padding: 8px; font-family: 'Teko'; font-size: 1.3rem; font-weight: bold; border-radius: 6px; cursor: pointer;">
+        CONFIRM CASHOUT
+      </button>
+      <div id="cashoutNotice" style="margin-top: 6px; text-align: center; font-size: 0.75rem;"></div>
+    `;
+  } else if (feature === 'usernameProfile') {
+    title.innerText = "USER PROFILE";
+    body.innerHTML = `
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div class="sum-detail-row"><span>USERNAME:</span><strong style="color: #ffd700;">KING_PLAYER_777</strong></div>
+        <div class="sum-detail-row"><span>ACCOUNT ID:</span><span>PK-98241</span></div>
+        <div class="sum-detail-row"><span>PHONE / UPI:</span><span>+91 98****3210</span></div>
+        <div class="sum-detail-row"><span>MEMBER TIER:</span><span style="color: #00f0ff; font-weight: bold;">VIP PLATINUM</span></div>
+        <div class="sum-detail-row"><span>STATUS:</span><span style="color: #00ff66;">ACTIVE (VERIFIED)</span></div>
+      </div>
+    `;
+  } else if (feature === 'statement') {
+    title.innerText = "ACCOUNT STATEMENT";
+    let rows = statementLogs.map(s => `
+      <div class="sum-detail-row">
+        <span>${s.time} - ${s.desc}</span>
+        <strong style="color: ${s.amount.startsWith('+') ? '#00ff66' : '#ff4d6d'};">${s.amount}</strong>
+      </div>
+    `).join('');
+    body.innerHTML = rows;
+  }
+
+  modal.classList.add("show");
+  playBeep(850, 0.05);
+}
+
+function closeMenuFeatureModal() {
+  document.getElementById("menuFeatureModal").classList.remove("show");
+}
+
+function processTokenSell() {
+  const input = document.getElementById("cashoutAmtInput");
+  const amt = parseInt(input.value);
+  const notice = document.getElementById("cashoutNotice");
+  if (!amt || amt <= 0) {
+    notice.innerHTML = `<span style="color: #ff4d6d;">Please enter a valid amount!</span>`;
+    return;
+  }
+  if (amt > balance) {
+    notice.innerHTML = `<span style="color: #ff4d6d;">Insufficient balance to cashout ₹${amt}!</span>`;
+    return;
+  }
+  balance -= amt;
+
+  balanceHistoryLogs.unshift({
+    id: `CASHOUT-${Math.floor(100 + Math.random() * 900)}`,
+    date: new Date().toLocaleDateString(),
+    time: new Date().toLocaleTimeString(),
+    amount: amt,
+    desc: "Token Sell Withdrawal",
+    type: "DEBIT"
+  });
+
+  statementLogs.unshift({
+    id: `ST-${statementLogs.length + 1}`,
+    type: "CASHOUT",
+    desc: `Token Sell Withdrawal`,
+    amount: `-₹${amt}`,
+    time: new Date().toLocaleTimeString()
+  });
+  updateStatsUI();
+  alert(`Cashout Request of ₹${amt} processed successfully! Sent to linked account.`);
+  closeMenuFeatureModal();
+  playBeep(980, 0.2);
+}
+
+function buildBoard() {
+  renderCols(document.getElementById("leftWing"), [1, 2, 3, 4, 5]);
+  renderCols(document.getElementById("rightWing"), [6, 7, 8, 9, 10]);
+  buildRowSelectors("leftRowSelectors", [1, 2, 3, 4, 5]);
+  buildRowSelectors("rightRowSelectors", [6, 7, 8, 9, 10]);
+}
+
+// SP, DP, आणि TP या तिन्ही प्रकारच्या पॅनेल्सच्या आडव्या ओळींसाठी २२ रो-चेकबॉक्स तयार करणे
+function buildRowSelectors(containerId, groupNumbers) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = "";
+  for (let rowIdx = 0; rowIdx < 22; rowIdx++) {
+    const item = document.createElement("div");
+    item.className = "row-cb-item";
+    item.innerHTML = `<input type="checkbox" title="Select Row ${rowIdx + 1}" onchange="toggleHorizontalRow([${groupNumbers}], ${rowIdx}, this.checked)">`;
+    container.appendChild(item);
+  }
+}
+
+function toggleHorizontalRow(groups, rowIndex, isChecked) {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) {
+    alert("Round closed for betting!");
+    return;
+  }
+
+  const targetPanas = [];
+  groups.forEach(grp => {
+    const colPanels = allPanels.filter(p => p.group === grp);
+    const ordered = [
+      ...colPanels.filter(p => p.type === "SP"),
+      ...colPanels.filter(p => p.type === "DP"),
+      ...colPanels.filter(p => p.type === "TP") // TP पॅनेल्स समाविष्ट
+    ];
+    if (ordered[rowIndex]) {
+      targetPanas.push(ordered[rowIndex].patti);
+    }
+  });
+
+  if (isChecked) {
+    const totalCost = targetPanas.length * selectedToken;
+    if (balance < (currentSelectedTotal + totalCost)) {
+      alert("Insufficient Balance in Wallet!");
+      return;
+    }
+    targetPanas.forEach(patti => {
+      currentSelectedTotal += selectedToken;
+      selectedBets[patti] = (selectedBets[patti] || 0) + selectedToken;
+      updatePattiBadge(patti);
+    });
+    playBeep(850, 0.05);
+  } else {
+    targetPanas.forEach(patti => {
+      const current = selectedBets[patti] || 0;
+      if (current > 0) {
+        currentSelectedTotal -= current;
+        selectedBets[patti] = 0;
+        delete selectedBets[patti];
+        updatePattiBadge(patti);
+      }
+    });
+    playBeep(450, 0.05);
+  }
+
+  updateStatsUI();
+  checkColumnCheckboxes();
+}
+
+function renderCols(container, groupNumbers) {
+  container.innerHTML = "";
+  groupNumbers.forEach(grp => {
+    const col = document.createElement("div");
+    col.className = "ank-col";
+    const title = grp === 10 ? "0" : `${grp}`;
+
+    col.innerHTML = `
+      <div class="ank-header" title="Left Click: Add | Right Click: Reduce"
+      onclick="handleAnkHeaderClick(${grp}, 1)"
+      oncontextmenu="handleAnkHeaderClick(${grp}, -1); return false;">${title}</div>
+      <div class="ank-select-group">
+      <label class="ank-cb-label sp-lbl">
+      <span>SP</span>
+      <input type="checkbox" id="cb-${grp}-SP" onchange="toggleColType(${grp}, 'SP', this.checked)">
+      </label>
+      </div>
+      <div class="patti-scroll" id="col-grp-${grp}"></div>
+    `;
+    container.appendChild(col);
+
+    const scroll = col.querySelector(".patti-scroll");
+    const colPanels = allPanels.filter(p => p.group === grp);
+
+    const spList = colPanels.filter(p => p.type === "SP");
+    const dpList = colPanels.filter(p => p.type === "DP");
+    const tpList = colPanels.filter(p => p.type === "TP");
+
+    // SP पॅनेल्स
+    spList.forEach(p => appendPattiItem(scroll, p));
+
+    // DP चेकबॉक्स हेडर
+    const dpHeaderWrap = document.createElement("label");
+    dpHeaderWrap.className = "dp-header-btn-wrap";
+    dpHeaderWrap.innerHTML = `
+      <span>DP</span>
+      <input type="checkbox" id="cb-${grp}-DP" onchange="toggleColType(${grp}, 'DP', this.checked)">
+    `;
+    scroll.appendChild(dpHeaderWrap);
+    dpList.forEach(p => appendPattiItem(scroll, p));
+
+    // TP चेकबॉक्स हेडर (आडव्या ओळीत सिलेक्ट करण्यासाठी)
+    const tpHeaderWrap = document.createElement("label");
+    tpHeaderWrap.className = "tp-header-btn-wrap";
+    tpHeaderWrap.innerHTML = `
+      <span>TP</span>
+      <input type="checkbox" id="cb-${grp}-TP" onchange="toggleColType(${grp}, 'TP', this.checked)">
+    `;
+    scroll.appendChild(tpHeaderWrap);
+    tpList.forEach(p => appendPattiItem(scroll, p));
+  });
+}
+
+function appendPattiItem(parent, p) {
+  const item = document.createElement("div");
+  item.className = `patti-item ${p.type.toLowerCase()}-item`;
+  item.id = `btn-${p.patti}`;
+
+  item.onclick = (e) => {
+    e.preventDefault();
+    if (isFCModeActive) {
+      handleFCPattiClick(p.patti, 1);
+    } else {
+      modifyPattiBet(p.patti, 1);
+    }
+  };
+  item.oncontextmenu = (e) => {
+    e.preventDefault();
+    if (isFCModeActive) {
+      handleFCPattiClick(p.patti, -1);
+    } else {
+      modifyPattiBet(p.patti, -1);
+    }
+    return false;
+  };
+
+  item.innerHTML = `
+    <div class="bet-chip-badge" id="tag-${p.patti}">₹0</div>
+    ${p.patti}
+  `;
+  parent.appendChild(item);
+}
+
+function modifyPattiBet(patti, direction) {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) {
+    alert("Round closed for betting!");
+    return;
+  }
+
+  if (direction > 0) {
+    if (balance < (currentSelectedTotal + selectedToken)) {
+      alert("Insufficient Balance in Wallet!");
+      return;
+    }
+    currentSelectedTotal += selectedToken;
+    selectedBets[patti] = (selectedBets[patti] || 0) + selectedToken;
+    playBeep(900 + selectedToken * 40, 0.04);
+  } else {
+    const current = selectedBets[patti] || 0;
+    if (current <= 0) return;
+    const deduct = Math.min(current, selectedToken);
+    currentSelectedTotal -= deduct;
+    selectedBets[patti] -= deduct;
+    if (selectedBets[patti] <= 0) delete selectedBets[patti];
+    playBeep(450, 0.04);
+  }
+
+  updateStatsUI();
+  updatePattiBadge(patti);
+  checkColumnCheckboxes();
+}
+
+function getCutDigit(d) {
+  return (parseInt(d) + 5) % 10;
+}
+
+function formatPanaDigits(d1, d2, d3) {
+  const raw = [d1, d2, d3];
+  raw.sort((a, b) => {
+    const valA = a === 0 ? 10 : a;
+    const valB = b === 0 ? 10 : b;
+    return valA - valB;
+  });
+  return `${raw[0]}${raw[1]}${raw[2]}`;
+}
+
+function getFamilyPanaGroup(pattiStr) {
+  const digits = pattiStr.split('').map(Number);
+  const opt0 = [digits[0], getCutDigit(digits[0])];
+  const opt1 = [digits[1], getCutDigit(digits[1])];
+  const opt2 = [digits[2], getCutDigit(digits[2])];
+
+  const familyList = new Set();
+  for (let a of opt0) {
+    for (let b of opt1) {
+      for (let c of opt2) {
+        const formattedPana = formatPanaDigits(a, b, c);
+        if (allPanels.some(p => p.patti === formattedPana)) {
+          familyList.add(formattedPana);
+        }
+      }
+    }
+  }
+  return Array.from(familyList);
+}
+
+function toggleFCMode() {
+  initAudio();
+  isFCModeActive = !isFCModeActive;
+  const btnFC = document.getElementById("btnFC");
+
+  if (isFCModeActive) {
+    btnFC.classList.add("fc-active");
+    btnFC.innerText = "⚡ FC ON ⚡";
+    playBeep(950, 0.08, "triangle");
+  } else {
+    btnFC.classList.remove("fc-active");
+    btnFC.innerText = "FC";
+    playBeep(450, 0.06);
+  }
+}
+
+function handleFCPattiClick(patti, direction) {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) {
+    alert("Round closed for betting!");
+    return;
+  }
+
+  const familyPanas = getFamilyPanaGroup(patti);
+
+  if (direction > 0) {
+    const totalCost = familyPanas.length * selectedToken;
+    if (balance < (currentSelectedTotal + totalCost)) {
+      alert(`Insufficient balance! Need ₹${totalCost} for ${familyPanas.length} Family Panas.`);
+      return;
+    }
+    familyPanas.forEach(p => {
+      currentSelectedTotal += selectedToken;
+      selectedBets[p] = (selectedBets[p] || 0) + selectedToken;
+      updatePattiBadge(p);
+    });
+    playBeep(920, 0.08, "triangle");
+  } else {
+    let deductedTotal = 0;
+    familyPanas.forEach(p => {
+      const current = selectedBets[p] || 0;
+      if (current > 0) {
+        const deduct = Math.min(current, selectedToken);
+        currentSelectedTotal -= deduct;
+        selectedBets[p] -= deduct;
+        if (selectedBets[p] <= 0) delete selectedBets[p];
+        deductedTotal += deduct;
+        updatePattiBadge(p);
+      }
+    });
+    if (deductedTotal > 0) playBeep(420, 0.06);
+  }
+
+  updateStatsUI();
+  checkColumnCheckboxes();
+}
+
+function handleAnkHeaderClick(grp, direction) {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) {
+    alert("Round closed for betting!");
+    return;
+  }
+
+  const targets = allPanels.filter(p => p.group === grp);
+
+  if (direction > 0) {
+    const totalCost = targets.length * selectedToken;
+    if (balance < (currentSelectedTotal + totalCost)) {
+      alert(`Insufficient balance! Need ₹${totalCost} for 22 pattis.`);
+      return;
+    }
+    targets.forEach(p => {
+      currentSelectedTotal += selectedToken;
+      selectedBets[p.patti] = (selectedBets[p.patti] || 0) + selectedToken;
+      updatePattiBadge(p.patti);
+    });
+    playBeep(850, 0.06);
+  } else {
+    let refunded = 0;
+    targets.forEach(p => {
+      const current = selectedBets[p.patti] || 0;
+      if (current > 0) {
+        const deduct = Math.min(current, selectedToken);
+        currentSelectedTotal -= deduct;
+        selectedBets[p.patti] -= deduct;
+        if (selectedBets[p.patti] <= 0) delete selectedBets[p.patti];
+        refunded += deduct;
+        updatePattiBadge(p.patti);
+      }
+    });
+    if (refunded > 0) playBeep(420, 0.06);
+  }
+
+  updateStatsUI();
+  checkColumnCheckboxes();
+}
+
+function toggleColType(grp, type, isChecked) {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) {
+    alert("Round closed for betting!");
+    const cb = document.getElementById(`cb-${grp}-${type}`);
+    if (cb) cb.checked = !isChecked;
+    return;
+  }
+
+  const targets = allPanels.filter(p => p.group === grp && p.type === type);
+
+  if (isChecked) {
+    const cost = targets.length * selectedToken;
+    if (balance < (currentSelectedTotal + cost)) {
+      alert(`Insufficient balance! Need ₹${cost} for ${targets.length} pattis.`);
+      const cb = document.getElementById(`cb-${grp}-${type}`);
+      if (cb) cb.checked = false;
+      return;
+    }
+    targets.forEach(p => {
+      currentSelectedTotal += selectedToken;
+      selectedBets[p.patti] = (selectedBets[p.patti] || 0) + selectedToken;
+      updatePattiBadge(p.patti);
+    });
+    playBeep(850, 0.05);
+  } else {
+    targets.forEach(p => {
+      const current = selectedBets[p.patti] || 0;
+      if (current > 0) {
+        currentSelectedTotal -= current;
+        selectedBets[p.patti] = 0;
+        delete selectedBets[p.patti];
+        updatePattiBadge(p.patti);
+      }
+    });
+    playBeep(450, 0.05);
+  }
+
+  updateStatsUI();
+}
+
+function toggleBatchRange(type, startGrp, endGrp, isChecked) {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) {
+    alert("Round closed for betting!");
+    return;
+  }
+
+  for (let grp = startGrp; grp <= endGrp; grp++) {
+    const cb = document.getElementById(`cb-${grp}-${type}`);
+    if (cb && cb.checked !== isChecked) {
+      cb.checked = isChecked;
+      toggleColType(grp, type, isChecked);
+    }
+  }
+}
+
+function updatePattiBadge(patti) {
+  const btn = document.getElementById(`btn-${patti}`);
+  if (btn) {
+    const amt = selectedBets[patti] || 0;
+    const tag = document.getElementById(`tag-${patti}`);
+    if (amt > 0) {
+      btn.classList.add("has-bet");
+      if (tag) tag.innerText = `₹${amt}`;
+    } else {
+      btn.classList.remove("has-bet");
+      if (tag) tag.innerText = `₹0`;
+    }
+  }
+}
+
+function checkColumnCheckboxes() {
+  for (let grp = 1; grp <= 10; grp++) {
+    ['SP', 'DP', 'TP'].forEach(t => {
+      const targets = allPanels.filter(p => p.group === grp && p.type === t);
+      const allHaveBet = targets.length > 0 && targets.every(p => (selectedBets[p.patti] || 0) > 0);
+      const cb = document.getElementById(`cb-${grp}-${t}`);
+      if (cb) cb.checked = allHaveBet;
+    });
+  }
+}
+
+function setToken(val, el) {
+  initAudio();
+  selectedToken = val;
+  document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+  el.classList.add("active");
+  playBeep(650, 0.05);
+}
+
+function clearBets() {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) return;
+
+  selectedBets = {};
+  currentSelectedTotal = 0;
+  updateStatsUI();
+
+  document.querySelectorAll(".patti-item").forEach(b => {
+    b.classList.remove("has-bet");
+    const tag = b.querySelector(".bet-chip-badge");
+    if (tag) tag.innerText = "₹0";
+  });
+
+  document.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
+  playBeep(350, 0.08);
+}
+
+// PRINT / CONFIRM BETS
+function printBets() {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) {
+    alert("Round closed for betting!");
+    return;
+  }
+
+  const activePanas = Object.keys(selectedBets).filter(p => selectedBets[p] > 0);
+  if (activePanas.length === 0) {
+    alert("No bets selected to print!");
+    return;
+  }
+
+  const grandTotalCost = currentSelectedTotal * selectedAdvanceDraws;
+  if (balance < grandTotalCost) {
+    alert(`Insufficient Balance! Need ₹${grandTotalCost} for ${selectedAdvanceDraws} upcoming draw(s).`);
+    return;
+  }
+
+  balance -= grandTotalCost;
+
+  statementLogs.unshift({
+    id: `ST-${statementLogs.length + 1}`,
+    type: "BET",
+    desc: `Bet Placed (${activePanas.length} Panas)`,
+    amount: `-₹${grandTotalCost}`,
+    time: new Date().toLocaleTimeString()
+  });
+
+  const now = new Date();
+  let printSlipsText = "";
+
+  for (let drawIdx = 0; drawIdx < selectedAdvanceDraws; drawIdx++) {
+    const drawTargetTime = new Date(now.getTime() + (drawIdx * maxTimer * 1000));
+    const formattedDrawTime = drawTargetTime.toLocaleTimeString();
+    const currentTicketId = `TKT-${ticketCounter++}`;
+
+    const ticketItems = {};
+    activePanas.forEach(p => {
+      ticketItems[p] = selectedBets[p];
+      if (drawIdx === 0) {
+        lockedBets[p] = (lockedBets[p] || 0) + selectedBets[p];
+        totalLockedBet += selectedBets[p];
+      }
+    });
+
+    const ticketObj = {
+      ticketId: currentTicketId,
+      items: ticketItems,
+      amount: currentSelectedTotal,
+      bookedAt: now.toLocaleTimeString(),
+      drawTime: formattedDrawTime,
+      drawOffsetIndex: drawIdx,
+      status: "PENDING"
+    };
+
+    allTicketsDatabase[currentTicketId] = ticketObj;
+    if (drawIdx === 0) {
+      lastPlacedTicket = ticketObj;
+      roundTickets.push(ticketObj);
+    }
+
+    printSlipsText += `==============================\n`;
+    printSlipsText += `      PANEL FUN BET RECEIPT   \n`;
+    printSlipsText += `==============================\n`;
+    printSlipsText += `TICKET NO : ${currentTicketId}\n`;
+    printSlipsText += `BOOKED AT : ${ticketObj.bookedAt}\n`;
+    printSlipsText += `DRAW TIME : ${formattedDrawTime} ${drawIdx > 0 ? `(ADVANCE +${drawIdx})` : ''}\n`;
+    printSlipsText += `ITEMS     : ${activePanas.length} Panas\n`;
+    printSlipsText += `TICKET AMT: ₹${currentSelectedTotal}\n`;
+    printSlipsText += `------------------------------\n`;
+    activePanas.forEach(p => {
+      printSlipsText += `Patti: ${p}   ->   ₹${selectedBets[p]}\n`;
+    });
+    printSlipsText += `==============================\n\n`;
+  }
+
+  const printWindow = window.open('', '', 'width=360,height=550');
+  if (printWindow) {
+    printWindow.document.write(`<pre style="font-family: monospace; font-size: 13px;">${printSlipsText}</pre>`);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+  } else {
+    alert(printSlipsText);
+  }
+
+  playBeep(950, 0.15, "triangle");
+
+  selectedBets = {};
+  currentSelectedTotal = 0;
+  selectedAdvanceDraws = 1;
+  document.getElementById("advanceDrawBadge").innerText = "1 DRAW (CURRENT)";
+  updateStatsUI();
+
+  document.querySelectorAll(".patti-item").forEach(b => {
+    b.classList.remove("has-bet");
+    const tag = b.querySelector(".bet-chip-badge");
+    if (tag) tag.innerText = "₹0";
+  });
+  document.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
+}
+
+function cancelLastBet() {
+  initAudio();
+  if (timeLeft <= 4 || isRolling) {
+    alert("Round closed! Cannot cancel bet now.");
+    return;
+  }
+
+  if (!lastPlacedTicket) {
+    alert("No recent ticket found to cancel!");
+    return;
+  }
+
+  balance += lastPlacedTicket.amount;
+
+  statementLogs.unshift({
+    id: `ST-${statementLogs.length + 1}`,
+    type: "REFUND",
+    desc: `Bet Cancelled (${lastPlacedTicket.ticketId})`,
+    amount: `+₹${lastPlacedTicket.amount}`,
+    time: new Date().toLocaleTimeString()
+  });
+
+  Object.keys(lastPlacedTicket.items).forEach(patti => {
+    const amt = lastPlacedTicket.items[patti];
+    lockedBets[patti] -= amt;
+    totalLockedBet -= amt;
+    if (lockedBets[patti] <= 0) delete lockedBets[patti];
+  });
+
+  delete allTicketsDatabase[lastPlacedTicket.ticketId];
+  const ticketIndex = roundTickets.findIndex(t => t.ticketId === lastPlacedTicket.ticketId);
+  if (ticketIndex !== -1) roundTickets.splice(ticketIndex, 1);
+
+  alert(`Ticket ${lastPlacedTicket.ticketId} (₹${lastPlacedTicket.amount}) cancelled successfully!\nAmount refunded to balance.`);
+  lastPlacedTicket = null;
+  updateStatsUI();
+  playBeep(400, 0.12);
+}
+
+// QUICK BARCODE SCANNER / TYPE CLAIM CHECK HANDLER
+function handleQuickBarcodeClaim(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    processQuickClaim();
+  }
+}
+
+function processQuickClaim() {
+  initAudio();
+  const input = document.getElementById("quickClaimInput");
+  const notice = document.getElementById("quickClaimNotice");
+  const val = input.value.trim().toUpperCase();
+
+  if (!val) {
+    notice.style.display = "none";
+    return;
+  }
+
+  const ticket = allTicketsDatabase[val];
+  if (!ticket) {
+    notice.className = "claim-instant-result loss";
+    notice.innerHTML = `❌ TICKET NOT FOUND!`;
+    playBeep(350, 0.1);
+    return;
+  }
+
+  const matchingDraw = drawHistoryDatabase.find(d => d.drawTime === ticket.drawTime) || (ticket.drawOffsetIndex === 0 && lastDrawSummaryRecord ? lastDrawSummaryRecord : null);
+
+  if (!matchingDraw) {
+    notice.className = "claim-instant-result";
+    notice.style.display = "block";
+    notice.style.background = "rgba(0, 240, 255, 0.2)";
+    notice.style.color = "#00f0ff";
+    notice.style.border = "1.5px solid #00f0ff";
+    notice.innerHTML = `⏳ DRAW PENDING (${ticket.drawTime})`;
+    playBeep(600, 0.08);
+    return;
+  }
+
+  const winningPatti = matchingDraw.patti;
+  const winningAmountPlayed = ticket.items[winningPatti] || 0;
+  const rate = matchingDraw.type === "TP" ? 600 : (matchingDraw.type === "DP" ? 300 : 150);
+  const totalWon = winningAmountPlayed * rate;
+
+  if (totalWon > 0) {
+    notice.className = "claim-instant-result win";
+    notice.innerHTML = `🎉 WON: ₹${totalWon}! (${ticket.ticketId})`;
+    playBeep(980, 0.35);
+  } else {
+    notice.className = "claim-instant-result loss";
+    notice.innerHTML = `❌ BETTER LUCK NEXT TIME!`;
+    playBeep(420, 0.12);
+  }
+}
+
+// DOUBLE ENTER KEY SHORTCUT FOR PRINT
+let lastEnterPressTime = 0;
+const doubleEnterDelay = 500;
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    if (document.activeElement && (document.activeElement.id === "cpInputField" || document.activeElement.id === "quickClaimInput" || document.activeElement.id === "claimTicketInput")) {
+      return;
+    }
+
+    const now = new Date().getTime();
+    if (now - lastEnterPressTime < doubleEnterDelay) {
+      e.preventDefault();
+      printBets();
+      lastEnterPressTime = 0;
+    } else {
+      lastEnterPressTime = now;
+    }
+  }
+});
+
+function openCPModal() {
+  initAudio();
+  const modal = document.getElementById("cpModal");
+  const input = document.getElementById("cpInputField");
+  input.value = "";
+  document.getElementById("cpResultNotice").innerText = "Type digits, then press ENTER or click OK";
+  modal.classList.add("show");
+  setTimeout(() => input.focus(), 150);
+  playBeep(750, 0.05);
+}
+
+function closeCPModal() {
+  document.getElementById("cpModal").classList.remove("show");
+}
+
+function handleCPEnter(e) {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    confirmCPSelection();
+  }
+}
+
+function confirmCPSelection() {
+  const input = document.getElementById("cpInputField");
+  formatAndApplyCP(input);
+  closeCPModal();
+  playBeep(980, 0.08);
+}
+
+function formatAndApplyCP(input) {
+  let raw = input.value.replace(/[^0-9]/g, '');
+
+  let formatted = '';
+  for (let i = 0; i < raw.length; i++) {
+    if (i > 0 && i % 2 === 0) {
+      formatted += '-';
+    }
+    formatted += raw[i];
+  }
+  input.value = formatted;
+
+  const notice = document.getElementById("cpResultNotice");
+
+  const pairs = [];
+  for (let i = 0; i + 1 < raw.length; i += 2) {
+    pairs.push(raw.slice(i, i + 2));
+  }
+
+  if (pairs.length === 0) {
+    notice.innerText = "Type digits, then press ENTER or click OK";
+    return;
+  }
+
+  let matchedPanas = [];
+
+  pairs.forEach(pair => {
+    const d1 = pair[0];
+    const d2 = pair[1];
+
+    allPanels.forEach(p => {
+      const digits = p.patti.split('');
+      if (d1 === d2) {
+        const count = digits.filter(d => d === d1).length;
+        if (count >= 2 && !matchedPanas.includes(p.patti)) {
+          matchedPanas.push(p.patti);
+        }
+      } else {
+        if (digits.includes(d1) && digits.includes(d2) && !matchedPanas.includes(p.patti)) {
+          matchedPanas.push(p.patti);
+        }
+      }
+    });
+  });
+
+  if (matchedPanas.length > 0) {
+    const cost = matchedPanas.length * selectedToken;
+    notice.innerHTML = `Found <strong style="color: #ffd700;">${matchedPanas.length}</strong> matching panels across ${pairs.length} pair(s)! Applying ₹${cost}...`;
+
+    matchedPanas.forEach(patti => {
+      if (!selectedBets[patti]) {
+        if (balance >= (currentSelectedTotal + selectedToken)) {
+          currentSelectedTotal += selectedToken;
+          selectedBets[patti] = (selectedBets[patti] || 0) + selectedToken;
+          updatePattiBadge(patti);
+        }
+      }
+    });
+    updateStatsUI();
+    checkColumnCheckboxes();
+    playBeep(900, 0.04);
+  } else {
+    notice.innerText = "No panels match these digits.";
+  }
+}
+
+function openAdvanceDrawModal() {
+  initAudio();
+  document.getElementById("advanceModal").classList.add("show");
+  playBeep(750, 0.05);
+}
+
+function closeAdvanceModal() {
+  document.getElementById("advanceModal").classList.remove("show");
+}
+
+function setAdvanceDrawCount(count) {
+  selectedAdvanceDraws = count;
+  document.getElementById("advanceModalNotice").innerText = `Selected: Next ${count} upcoming continuous draw(s).`;
+  document.getElementById("advanceDrawBadge").innerText = `${count} DRAWS`;
+
+  document.querySelectorAll(".adv-chip-btn").forEach(btn => {
+    if (parseInt(btn.innerText) === count) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+
+  playBeep(850, 0.05);
+  closeAdvanceModal();
+}
+
+function openClaimModal() {
+  initAudio();
+  document.getElementById("claimModal").classList.add("show");
+  document.getElementById("claimTicketInput").value = "";
+  document.getElementById("claimResultArea").innerHTML = "";
+  playBeep(750, 0.05);
+}
+
+function closeClaimModal() {
+  document.getElementById("claimModal").classList.remove("show");
+}
+
+async function pasteToClaimInput() {
+  try {
+    const text = await navigator.clipboard.readText();
+    if (text) {
+      document.getElementById("claimTicketInput").value = text.trim().toUpperCase();
+      playBeep(850, 0.05);
+    }
+  } catch (err) {
+    const manual = prompt("Paste Ticket ID here:");
+    if (manual) {
+      document.getElementById("claimTicketInput").value = manual.trim().toUpperCase();
+      playBeep(850, 0.05);
+    }
+  }
+}
+
+function verifyClaimTicket() {
+  initAudio();
+  const inputVal = document.getElementById("claimTicketInput").value.trim().toUpperCase();
+  const resultArea = document.getElementById("claimResultArea");
+
+  if (!inputVal) {
+    resultArea.innerHTML = `<div style="color: #ff4d6d;">Please enter a Ticket ID.</div>`;
+    return;
+  }
+
+  const ticket = allTicketsDatabase[inputVal];
+  if (!ticket) {
+    resultArea.innerHTML = `<div style="color: #ff4d6d; background: rgba(255,0,0,0.1); padding: 8px; border-radius: 4px;">Ticket not found! Please check ticket number.</div>`;
+    playBeep(350, 0.1);
+    return;
+  }
+
+  const matchingDraw = drawHistoryDatabase.find(d => d.drawTime === ticket.drawTime) || (ticket.drawOffsetIndex === 0 && lastDrawSummaryRecord ? lastDrawSummaryRecord : null);
+
+  if (!matchingDraw) {
+    resultArea.innerHTML = `
+      <div style="background: rgba(255,215,0,0.1); border: 1px solid #ffd700; padding: 8px; border-radius: 6px;">
+        <div style="color: #ffd700; font-weight: bold;">TICKET: ${ticket.ticketId}</div>
+        <div>DRAW TIME: <strong>${ticket.drawTime}</strong></div>
+        <div style="color: #00f0ff; margin-top: 4px;">⏳ DRAW PENDING: This draw has not completed yet. Please wait for its result.</div>
+      </div>
+    `;
+    playBeep(600, 0.08);
+    return;
+  }
+
+  const winningPatti = matchingDraw.patti;
+  const winningAmountPlayed = ticket.items[winningPatti] || 0;
+  const rate = matchingDraw.type === "TP" ? 600 : (matchingDraw.type === "DP" ? 300 : 150);
+  const totalWon = winningAmountPlayed * rate;
+
+  if (totalWon > 0) {
+    resultArea.innerHTML = `
+      <div style="background: rgba(0,255,102,0.15); border: 1.5px solid #00ff66; padding: 10px; border-radius: 6px;">
+        <div style="color: #ffd700; font-weight: bold; font-size: 1.1rem;">🎉 WINNER TICKET: ${ticket.ticketId}</div>
+        <div>DRAW TIME: <strong>${ticket.drawTime}</strong></div>
+        <div>WINNING PATTI: <strong style="color: #ffd700;">${winningPatti} (${matchingDraw.ank})</strong></div>
+        <div>PLAYED ON PATTI: ₹${winningAmountPlayed} (${rate}x)</div>
+        <div style="color: #00ff66; font-size: 1.4rem; font-family: 'Teko'; font-weight: bold; margin-top: 4px;">CLAIM AMOUNT: ₹${totalWon}</div>
+      </div>
+    `;
+    playBeep(980, 0.3);
+  } else {
+    resultArea.innerHTML = `
+      <div style="background: rgba(255,0,85,0.15); border: 1.5px solid #ff0055; padding: 10px; border-radius: 6px;">
+        <div style="color: #fff; font-weight: bold;">TICKET: ${ticket.ticketId}</div>
+        <div>DRAW TIME: <strong>${ticket.drawTime}</strong></div>
+        <div>DRAW RESULT: <strong style="color: #ffd700;">${winningPatti} (${matchingDraw.ank})</strong></div>
+        <div style="color: #ff4d6d; font-weight: bold; margin-top: 4px;">BET STATUS: NO WIN (LOSS: ₹${ticket.amount})</div>
+      </div>
+    `;
+    playBeep(450, 0.1);
+  }
+}
+
+function copyTicketToClipboard(ticketId, event) {
+  event.stopPropagation();
+  initAudio();
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(ticketId).then(() => {
+      playBeep(980, 0.05);
+      alert(`Copied: ${ticketId}`);
+    }).catch(() => fallbackCopy(ticketId));
+  } else {
+    fallbackCopy(ticketId);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement("textarea");
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand("copy");
+  document.body.removeChild(ta);
+  playBeep(980, 0.05);
+  alert(`Copied: ${text}`);
+}
+
+function showLastDrawSummary() {
+  initAudio();
+  const modal = document.getElementById("summaryModal");
+  const content = document.getElementById("summaryContent");
+  const timeEl = document.getElementById("sumTime");
+
+  if (!lastDrawSummaryRecord) {
+    content.innerHTML = `<div style="text-align: center; color: #ff80a0; padding: 12px;">No draw record available yet. Complete at least 1 draw.</div>`;
+    timeEl.innerText = "--:--:--";
+  } else {
+    timeEl.innerText = lastDrawSummaryRecord.time;
+
+    let html = `
+      <div style="background: rgba(0,240,255,0.1); border: 1.5px solid #00f0ff; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px;">
+        <div><strong>RESULT:</strong> <span style="color: #ffd700; font-size: 1.35rem; font-weight: bold;">${lastDrawSummaryRecord.patti} - ${lastDrawSummaryRecord.ank}</span> (${lastDrawSummaryRecord.type})</div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-top: 2px;">
+          <span>TOTAL BET: <strong>₹${lastDrawSummaryRecord.totalAmount}</strong></span>
+          <span>TOTAL WON: <strong style="color: #00ff66;">₹${lastDrawSummaryRecord.wonAmount}</strong></span>
+        </div>
+      </div>
+      <div style="font-size: 0.65rem; color: #aaa; margin-bottom: 4px; text-align: center;">⚡ CLICK ON TICKET TO EXPAND DETAILS ⚡</div>
+    `;
+
+    if (lastDrawSummaryRecord.tickets.length === 0) {
+      html += `<div style="text-align: center; color: #888; padding: 10px;">No tickets booked in this draw.</div>`;
+    } else {
+      lastDrawSummaryRecord.tickets.forEach(tkt => {
+        const isWinningTicket = Boolean(tkt.items[lastDrawSummaryRecord.patti]);
+        const rate = lastDrawSummaryRecord.type === "TP" ? 600 : (lastDrawSummaryRecord.type === "DP" ? 300 : 150);
+        const ticketWinAmt = isWinningTicket ? (tkt.items[lastDrawSummaryRecord.patti] * rate) : 0;
+
+        html += `
+          <div class="ticket-summary-item ${isWinningTicket ? 'is-winner' : ''}" id="tktCard-${tkt.ticketId}">
+            <div class="ticket-header-row" onclick="toggleTicketDetails('${tkt.ticketId}')">
+              <div class="tkt-badge">
+                <span>🎫 ${tkt.ticketId}</span>
+                <button class="btn-copy-tkt" onclick="copyTicketToClipboard('${tkt.ticketId}', event)">COPY</button>
+                <span style="font-size: 0.85rem; color: #888; font-family: monospace; margin-left: 4px;">(${tkt.drawTime})</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                ${isWinningTicket 
+                  ? `<span class="tkt-status-pill status-win">WIN: +₹${ticketWinAmt}</span>` 
+                  : `<span class="tkt-status-pill status-loss">LOSS: -₹${tkt.amount}</span>`}
+                <span class="arrow-indicator">▼</span>
+              </div>
+            </div>
+            <div class="ticket-details-box" id="tktDetails-${tkt.ticketId}">
+              <div style="font-size: 0.72rem; color: #ffd700; margin-bottom: 2px; font-weight: bold;">Played Items:</div>
+        `;
+
+        Object.keys(tkt.items).forEach(p => {
+          const isPattiWinner = p === lastDrawSummaryRecord.patti;
+          const style = isPattiWinner ? "border: 1px solid #00ff66; background: rgba(0,255,102,0.25); color: #00ff66; font-weight: bold;" : "";
+          html += `
+            <div class="sum-detail-row" style="${style}">
+              <span>Patti: <strong>${p}</strong> ${isPattiWinner ? '★ WINNER' : ''}</span>
+              <span>₹${tkt.items[p]}</span>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+    }
+    content.innerHTML = html;
+  }
+
+  modal.classList.add("show");
+  playBeep(700, 0.05);
+}
+
+function toggleTicketDetails(ticketId) {
+  const card = document.getElementById(`tktCard-${ticketId}`);
+  if (card) {
+    card.classList.toggle('open');
+    playBeep(850, 0.03);
+  }
+}
+
+function closeSummaryModal() {
+  document.getElementById("summaryModal").classList.remove("show");
+}
+
+function updateStatsUI() {
+  document.getElementById("balanceText").innerText = `₹${balance}`;
+  document.getElementById("currentSelectedText").innerText = `₹${currentSelectedTotal}`;
+  const menuBal = document.getElementById("menuBalText");
+  if (menuBal) menuBal.innerText = `₹${balance}`;
+}
+
+// 60-SECOND REAL-TIME COUNTDOWN LOOP
+const timerRing = document.getElementById("timerRing");
+const timerNum = document.getElementById("timerNum");
+const circum = 2 * Math.PI * 22;
+
+function syncRealTimeDrawCycle() {
+  const now = new Date();
+  const epochSec = Math.floor(now.getTime() / 1000);
+  const cycleIndex = Math.floor(epochSec / maxTimer);
+  const secInCycle = epochSec % maxTimer;
+  const remaining = maxTimer - secInCycle;
+
+  if ((secInCycle === 0 || remaining <= 1) && !isRolling && lastProcessedCycle !== cycleIndex) {
+    lastProcessedCycle = cycleIndex;
+    timeLeft = 0;
+    timerNum.innerText = 0;
+    timerRing.style.strokeDashoffset = circum;
+    timerRing.style.stroke = "#ff0055";
+    timerNum.style.color = "#ff0055";
+    triggerRollingDrawSequence();
+    return;
+  }
+
+  if (isRolling) return;
+
+  timeLeft = remaining;
+  timerNum.innerText = timeLeft;
+  const offset = circum - (timeLeft / maxTimer) * circum;
+  timerRing.style.strokeDashoffset = offset;
+
+  if (timeLeft <= 5) {
+    timerRing.style.stroke = "#ff0055";
+    timerNum.style.color = "#ff0055";
+    playBeep(850, 0.04);
+  } else {
+    timerRing.style.stroke = "#00f0ff";
+    timerNum.style.color = "#ffffff";
+  }
+}
+
+function startTimerLoop() {
+  syncRealTimeDrawCycle();
+  setInterval(syncRealTimeDrawCycle, 500);
+}
+
+let reelIntervals = [null, null, null];
+
+// ४ सेकंदांचे रील फिरण्याचे ॲनिमेशन (Reel Rolling Animation)
+function triggerRollingDrawSequence() {
+  if (isRolling) return;
+  isRolling = true;
+  initAudio();
+
+  const winner = allPanels[Math.floor(Math.random() * allPanels.length)];
+  const digits = winner.patti.split("");
+
+  const reels = [
+    { box: document.getElementById("reelBox1"), strip: document.getElementById("reel1") },
+    { box: document.getElementById("reelBox2"), strip: document.getElementById("reel2") },
+    { box: document.getElementById("reelBox3"), strip: document.getElementById("reel3") }
+  ];
+
+  const ankSumText = document.getElementById("ankSumText");
+  ankSumText.innerText = "SPINNING...";
+
+  reels.forEach((r, idx) => {
+    r.box.classList.remove("locked");
+    r.box.classList.add("is-rolling");
+
+    let currentVal = 0;
+    clearInterval(reelIntervals[idx]);
+    reelIntervals[idx] = setInterval(() => {
+      currentVal = Math.floor(Math.random() * 10);
+      r.strip.innerHTML = `<div class="reel-number">${currentVal}</div>`;
+      playBeep(1100 + idx * 80 + Math.random() * 150, 0.02, "square");
+    }, 45);
+  });
+
+  // पहिली रील १.५ सेकंदात थांबेल
+  setTimeout(() => {
+    stopReel(reels[0], 0, digits[0]);
+    playReelSlam(220);
+  }, 1500);
+
+  // दुसरी रील २.८ सेकंदात थांबेल
+  setTimeout(() => {
+    stopReel(reels[1], 1, digits[1]);
+    playReelSlam(260);
+  }, 2800);
+
+  // तिसरी रील बरोबर ४.० सेकंदात थांबेल (४ सेकंद ॲनिमेशन पूर्ण)
+  setTimeout(() => {
+    stopReel(reels[2], 2, digits[2]);
+    playReelSlam(320);
+
+    ankSumText.innerText = `ANK: ${winner.ank}`;
+    playBeep(980, 0.25, "triangle");
+
+    document.getElementById("bigLastResultText").innerText = `${winner.patti} - ${winner.ank}`;
+
+    setTimeout(() => {
+      showGrandWinnerPopup(winner);
+
+      setTimeout(() => {
+        document.getElementById("grandOverlay").classList.remove("show");
+        resetBoardAfterDraw();
+        isRolling = false;
+        syncRealTimeDrawCycle();
+      }, 5000);
+
+    }, 500);
+  }, 4000);
+}
+
+function stopReel(reelObj, index, finalDigit) {
+  clearInterval(reelIntervals[index]);
+  reelIntervals[index] = null;
+  reelObj.box.classList.remove("is-rolling");
+  reelObj.box.classList.add("locked");
+  reelObj.strip.innerHTML = `<div class="reel-number">${finalDigit}</div>`;
+}
+
+function showGrandWinnerPopup(winner) {
+  document.getElementById("popPatti").innerText = winner.patti;
+  document.getElementById("popAnk").innerText = winner.ank;
+
+  const typeMap = { SP: "SINGLE PANA (SP)", DP: "DOUBLE PANA (DP)", TP: "TRIPLE PANA (TP)" };
+  document.getElementById("popType").innerText = typeMap[winner.type];
+
+  const userBet = lockedBets[winner.patti] || 0;
+  const wonAmtBox = document.getElementById("popWonAmtBox");
+  const lastWonText = document.getElementById("bigLastWonText");
+
+  let wonAmount = 0;
+  if (userBet > 0) {
+    const rate = winner.type === "TP" ? 600 : (winner.type === "DP" ? 300 : 150);
+    wonAmount = userBet * rate;
+    balance += wonAmount;
+
+    statementLogs.unshift({
+      id: `ST-${statementLogs.length + 1}`,
+      type: "WIN",
+      desc: `Patti Won (${winner.patti})`,
+      amount: `+₹${wonAmount}`,
+      time: new Date().toLocaleTimeString()
+    });
+
+    wonAmtBox.style.display = "block";
+    wonAmtBox.style.color = "#00ff66";
+    wonAmtBox.innerText = `🎉 WON: ₹${wonAmount} (${winner.type} ${rate}x)`;
+
+    lastWonText.innerText = `LAST WIN: ₹${wonAmount}`;
+    lastWonText.style.color = "#00ff66";
+    playBeep(980, 0.35);
+  } else {
+    wonAmtBox.style.display = "block";
+    wonAmtBox.style.color = "#ffaa00";
+    wonAmtBox.innerText = `WON: ₹0`;
+
+    lastWonText.innerText = `LAST WIN: ₹0`;
+    lastWonText.style.color = "#888";
+    playBeep(450, 0.15);
+  }
+
+  const currentDrawTime = new Date().toLocaleTimeString();
+  lastDrawSummaryRecord = {
+    patti: winner.patti,
+    ank: winner.ank,
+    type: winner.type,
+    tickets: [...roundTickets],
+    betsPlaced: { ...lockedBets },
+    totalAmount: totalLockedBet,
+    ticketsCount: Object.keys(lockedBets).length,
+    wonAmount: wonAmount,
+    time: currentDrawTime
+  };
+
+  drawHistoryDatabase.push({
+    drawTime: currentDrawTime,
+    patti: winner.patti,
+    ank: winner.ank,
+    type: winner.type,
+    won: wonAmount
+  });
+
+  updateStatsUI();
+  document.getElementById("grandOverlay").classList.add("show");
+  addHistory(winner);
+}
+
+function resetBoardAfterDraw() {
+  lockedBets = {};
+  totalLockedBet = 0;
+  selectedBets = {};
+  currentSelectedTotal = 0;
+  roundTickets = [];
+  lastPlacedTicket = null;
+  updateStatsUI();
+
+  document.querySelectorAll(".patti-item").forEach(b => {
+    b.classList.remove("has-bet");
+    const tag = b.querySelector(".bet-chip-badge");
+    if (tag) tag.innerText = "₹0";
+  });
+  document.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
+
+  for (let i = 1; i <= 3; i++) {
+    const box = document.getElementById(`reelBox${i}`);
+    const strip = document.getElementById(`reel${i}`);
+    box.classList.remove("is-rolling", "locked");
+    strip.innerHTML = `<div class="reel-number">-</div>`;
+  }
+  const ankSumText = document.getElementById("ankSumText");
+  ankSumText.innerText = "ANK: --";
+}
+
+function addHistory(winner) {
+  history.unshift(winner);
+  if (history.length > 6) history.pop();
+  const container = document.getElementById("histContainer");
+  container.innerHTML = "";
+  history.forEach(h => {
+    const pill = document.createElement("div");
+    pill.className = "hist-pill";
+    pill.innerText = `${h.patti}-${h.ank}`;
+    container.appendChild(pill);
+  });
+}
+
+window.addEventListener('click', initAudio, { once: true });
+buildBoard();
+startTimerLoop();
+</script>
+</body>
+</html>
